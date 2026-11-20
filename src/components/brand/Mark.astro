@@ -1,0 +1,33 @@
+---
+/**
+ * NARI Studio mark (direction D): the lowercase "n" arch with the teal learning dot.
+ * `tile` draws it on the ink rounded square used for app icons and favicons.
+ */
+interface Props {
+  size?: number;
+  tile?: boolean;
+  class?: string;
+  title?: string;
+}
+const { size = 32, tile = false, class: className, title } = Astro.props;
+---
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  class={className}
+  role={title ? "img" : undefined}
+  aria-label={title}
+  aria-hidden={title ? undefined : "true"}
+>
+  {tile && <rect width="64" height="64" rx="14" fill="#0E1420" />}
+  <path
+    d="M19 47V21M19 32a13 13 0 0 1 26 0v15"
+    fill="none"
+    stroke={tile ? "#F1F5F9" : "currentColor"}
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="45" cy="17" r="5" fill={tile ? "#14B8A6" : "var(--nari-accent)"} />
+</svg>

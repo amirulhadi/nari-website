@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+---
+<BaseLayout title="Page not found" noindex>
+  <section class="py-28 sm:py-36">
+    <div class="container-site max-w-2xl text-center">
+      <p class="eyebrow mb-4">404</p>
+      <h1 class="text-h2">This page doesn't exist (yet).</h1>
+      <p class="mt-5 text-lead text-ink-2">The link may be old, or the page may still be on its way.</p>
+      <div class="mt-9 flex justify-center gap-3">
+        <Button href="/">Go to the homepage</Button>
+        <Button href="/early-access/" variant="secondary">Early access</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

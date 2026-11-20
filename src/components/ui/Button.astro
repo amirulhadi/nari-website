@@ -1,0 +1,38 @@
+---
+/**
+ * Button / link button. Renders <a> when `href` is set, otherwise <button>.
+ * A disabled link renders as a non-interactive <span aria-disabled> (never a dead link).
+ */
+import type { HTMLAttributes } from "astro/types";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "ghost" | "inverse";
+  size?: "sm" | "md" | "lg";
+  type?: "button" | "submit";
+  disabled?: boolean;
+  class?: string;
+  cta?: string; // analytics hook: data-cta attribute (no tracking is wired)
+  [key: string]: unknown;
+}
+const { href, variant = "primary", size = "md", type = "button", disabled = false, class: className, cta, ...rest } = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-semibold whitespace-nowrap transition-colors duration-150 select-none";
+const sizes = { sm: "h-9 px-3.5 text-sm", md: "h-11 px-5 text-[0.9375rem]", lg: "h-12 px-6 text-base" };
+const variants = {
+  primary: "bg-ink text-paper hover:bg-ink/85",
+  secondary: "border border-line-strong bg-surface text-ink hover:border-ink/40",
+  ghost: "text-ink hover:bg-sunken",
+  inverse: "bg-white text-[#0e1420] hover:bg-white/90",
+};
+const disabledCls = "opacity-55 cursor-not-allowed pointer-events-none";
+const cls = [base, sizes[size], variants[variant], disabled && disabledCls, className];
+---
+{href && !disabled ? (
+  <a href={href} class:list={cls} data-cta={cta} {...(rest as HTMLAttributes<"a">)}><slot /></a>
+) : href && disabled ? (
+  <span class:list={cls} aria-disabled="true" data-cta={cta}><slot /></span>
+) : (
+  <button type={type} class:list={cls} disabled={disabled} data-cta={cta} {...(rest as HTMLAttributes<"button">)}><slot /></button>
+)}
