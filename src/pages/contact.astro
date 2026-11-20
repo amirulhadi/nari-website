@@ -1,0 +1,52 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import Button from "@/components/ui/Button.astro";
+import { primaryCta, site } from "@/config/site";
+
+const channels = [
+  { key: "general", title: "General enquiries", body: "Questions about NARI Studio, partnerships or press." },
+  { key: "sales", title: "Sales enquiries", body: "Plans, licensing and what suits your work." },
+  { key: "enterprise", title: "Enterprise enquiries", body: "Organisation-wide licensing, security questions and procurement." },
+  { key: "support", title: "Support", body: "Help using NARI Studio. In the app, About → Copy diagnostics gathers version and error details (never course content) to include with your message." },
+] as const;
+
+const cta = primaryCta();
+---
+<BaseLayout
+  title="Contact"
+  description="Contact NARI Studio for general, sales, enterprise and support enquiries."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Talk to the NARI Studio team."
+    intro="Choose the channel that fits your question."
+  />
+
+  <section class="pb-24 lg:pb-32">
+    <div class="container-site grid gap-6 md:grid-cols-2">
+      {channels.map((channel) => {
+        const email = site.contact[channel.key].email;
+        return (
+          <div class="flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7">
+            <h2 class="text-h3">{channel.title}</h2>
+            <p class="mt-2 text-ink-2">{channel.body}</p>
+            <div class="mt-auto pt-6">
+              {email ? (
+                <a href={`mailto:${email}`} class="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">{email}</a>
+              ) : (
+                <p class="text-sm text-muted">Contact details will be published at launch.</p>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    {!Object.values(site.contact).every((c) => c.email) && (
+      <div class="container-site mt-10">
+        <p class="max-w-[40rem] text-ink-2">In the meantime, the best way to reach us is early access. Request access when sign-ups open and tell us what you'd like to build.</p>
+        <Button href={cta.href} class="mt-5" cta="contact-primary">{cta.label}</Button>
+      </div>
+    )}
+  </section>
+</BaseLayout>

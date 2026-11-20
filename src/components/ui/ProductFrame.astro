@@ -1,0 +1,53 @@
+---
+/**
+ * Frames a REAL screenshot of NARI Studio in a minimal window chrome.
+ * Images come from scripts/capture (see src/assets/screenshots/manifest.json).
+ */
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  title?: string;
+  priority?: boolean;
+  sizes?: string;
+  chrome?: boolean;
+  class?: string;
+}
+const {
+  src,
+  alt,
+  caption,
+  title = "NARI Studio",
+  priority = false,
+  sizes = "(min-width: 1200px) 1136px, 100vw",
+  chrome = true,
+  class: className,
+} = Astro.props;
+---
+<figure class:list={["m-0", className]}>
+  <div class="overflow-hidden rounded-[var(--radius-frame)] border border-[#1e2738] bg-product shadow-[0_1px_2px_rgba(14,20,32,0.06),0_24px_60px_-28px_rgba(14,20,32,0.45)]">
+    {chrome && (
+      <div class="flex h-8 items-center gap-1.5 border-b border-white/5 px-3.5" aria-hidden="true">
+        <span class="size-2.5 rounded-full bg-white/15"></span>
+        <span class="size-2.5 rounded-full bg-white/15"></span>
+        <span class="size-2.5 rounded-full bg-white/15"></span>
+        <span class="ml-3 text-[11px] font-medium text-white/65">{title}</span>
+      </div>
+    )}
+    <Picture
+      src={src}
+      alt={alt}
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      widths={[640, 960, 1280, 1600, 2400]}
+      sizes={sizes}
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+      class="block h-auto w-full"
+    />
+  </div>
+  {caption && <figcaption class="mt-3 text-sm text-muted">{caption}</figcaption>}
+</figure>

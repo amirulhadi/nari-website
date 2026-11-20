@@ -1,0 +1,56 @@
+---
+import Logo from "@/components/brand/Logo.astro";
+import Button from "@/components/ui/Button.astro";
+import { mainNav, resolve } from "@/config/navigation";
+import { accountUrl, primaryCta, site } from "@/config/site";
+
+const signIn = accountUrl("signIn"); // null until an account system exists
+const links = resolve(mainNav);
+const cta = primaryCta();
+---
+<header class="sticky top-0 z-50 border-b border-transparent bg-paper transition-colors" data-header>
+  <div class="container-site flex h-16 items-center gap-8">
+    <a href="/" class="shrink-0 rounded-md" aria-label={`${site.brand} home`}>
+      <Logo size="sm" />
+    </a>
+
+    <nav aria-label="Main" class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {links.map((link) => (
+          <li><a href={link.href} class="rounded-md px-3 py-2 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:text-ink">{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      {signIn && (
+        <Button href={signIn} variant="ghost" size="sm" class="hidden md:inline-flex" cta="header-sign-in">Sign in</Button>
+      )}
+      <Button href={cta.href} size="sm" cta="header-primary" class="hidden sm:inline-flex">{cta.label}</Button>
+      <button
+        type="button"
+        class="inline-flex size-10 items-center justify-center rounded-md text-ink hover:bg-sunken md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menu</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" data-icon-open />
+          <path d="M6 6l12 12M18 6L6 18" data-icon-close class="hidden" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-paper md:hidden" data-menu>
+    <nav aria-label="Mobile" class="container-site py-4">
+      <ul class="flex flex-col">
+        {links.map((link) => (
+          <li><a href={link.href} class="block rounded-md py-3 text-lg font-semibold text-ink">{link.label}</a></li>
+        ))}
+      </ul>
+      <Button href={cta.href} size="lg" class="mt-4 w-full" cta="mobile-primary">{cta.label}</Button>
+    </nav>
+  </div>
+</header>

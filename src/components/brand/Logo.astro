@@ -1,0 +1,16 @@
+---
+/**
+ * NARI Studio wordmark (direction D): "nari" + teal dot + small-caps "Studio".
+ * Text-based (Manrope 800) so it stays crisp and accessible; the accessible name is "NARI Studio".
+ */
+interface Props {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+const { size = "md", class: className } = Astro.props;
+const scale = { sm: "text-[22px]", md: "text-[26px]", lg: "text-[40px]" }[size];
+---
+<span class:list={["inline-flex items-baseline gap-2 leading-none text-ink", className]} aria-label="NARI Studio" role="img">
+  <span class:list={[scale, "font-extrabold tracking-[-0.05em]"]} aria-hidden="true">nari<span class="text-accent">.</span></span>
+  <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted" aria-hidden="true">Studio</span>
+</span>

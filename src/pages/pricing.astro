@@ -1,0 +1,107 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import Button from "@/components/ui/Button.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
+import PlanCard from "@/components/pricing/PlanCard.astro";
+import BillingToggle from "@/components/pricing/BillingToggle.astro";
+import ComparisonTable from "@/components/pricing/ComparisonTable.astro";
+import FaqList from "@/components/pricing/FaqList.astro";
+import { faqs, plans, pricing, subscriptionBenefits, upgradeMessage } from "@/config/pricing";
+import { site } from "@/config/site";
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: { "@type": "Answer", text: faq.answer },
+  })),
+};
+---
+<BaseLayout
+  title="Pricing: plans for e-learning authoring"
+  description="Compare the proposed NARI Studio plans: Free, Pro, Team and Enterprise. Pricing will be announced at launch."
+  structuredData={[faqJsonLd]}
+>
+  <PageHero
+    eyebrow="Pricing"
+    title="Start free. Grow into a paid plan when you need one."
+    intro="A complete Free plan, and paid plans for commercial work, teams and organisations."
+  />
+
+  <div data-billing-root data-billing="monthly">
+    <section class="pb-16 lg:pb-24" aria-labelledby="plans-title">
+      <div class="container-site">
+        <h2 id="plans-title" class="sr-only">Plans</h2>
+
+        {!site.flags.pricingPublished && (
+          <p class="mb-8 max-w-[48rem] rounded-[var(--radius-card)] border border-line bg-surface p-4 text-sm text-ink-2" role="note">
+            <strong class="font-semibold text-ink">Pricing will be announced at launch.</strong>{" "}
+            NARI Studio is in early access. The plans below are a proposal and may change, and nobody is charged before prices are published.
+          </p>
+        )}
+
+        <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <BillingToggle />
+          {pricing.trialDays && <p class="text-sm font-medium text-accent">Paid plans include a {pricing.trialDays}-day free trial.</p>}
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {plans.map((plan) => <PlanCard plan={plan} />)}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="border-t border-line bg-surface py-16 lg:py-24" aria-labelledby="benefits-title">
+    <div class="container-site">
+      <h2 id="benefits-title" class="text-h2 max-w-[40rem]">Built around fair upgrades.</h2>
+      <div class="mt-12 grid gap-10 md:grid-cols-3">
+        {subscriptionBenefits.map((item) => (
+          <div>
+            <h3 class="text-h3">{item.title}</h3>
+            <p class="mt-3 text-ink-2">{item.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-12 max-w-[48rem] border-l-2 border-accent pl-5 text-lead text-ink">{upgradeMessage}</p>
+    </div>
+  </section>
+
+  <section id="compare" class="py-16 lg:py-24" aria-labelledby="compare-title">
+    <div class="container-site">
+      <h2 id="compare-title" class="text-h2 max-w-[40rem]">Compare plans.</h2>
+      <p class="mt-4 max-w-[44rem] text-lead text-ink-2">
+        Every plan includes the full set of authoring features available today. Items tagged Planned are not available yet.
+      </p>
+      <div class="mt-10"><ComparisonTable /></div>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-16 lg:py-24" aria-labelledby="enterprise-title">
+    <div class="container-site grid items-center gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="eyebrow mb-4">Team and Enterprise</p>
+        <h2 id="enterprise-title" class="text-h2">Training for a whole organisation?</h2>
+        <p class="mt-5 text-lead text-ink-2">
+          Tell us how many authors you have, how you publish and what your procurement and security teams need. Team and Enterprise licensing starts with a conversation.
+        </p>
+      </div>
+      <div class="lg:col-span-5 lg:justify-self-end">
+        <Button href="/contact/" size="lg" cta="enterprise-enquiry">Enterprise enquiry</Button>
+        <p class="mt-3 text-sm text-muted">Opens the contact page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24" aria-labelledby="faq-title">
+    <div class="container-site grid gap-10 lg:grid-cols-12">
+      <h2 id="faq-title" class="text-h2 lg:col-span-4">Pricing questions.</h2>
+      <div class="lg:col-span-8"><FaqList items={faqs} /></div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
+import Button from "@/components/ui/Button.astro";
+import { demos, getDemo } from "@/config/showcase";
+import manifest from "@/assets/screenshots/manifest.json";
+
+export function getStaticPaths() {
+  return demos.map((demo) => ({ params: { slug: demo.slug } }));
+}
+
+const demo = getDemo(Astro.params.slug!)!;
+const src = `/demos/${demo.slug}/`;
+const others = demos.filter((d) => d.slug !== demo.slug);
+---
+<BaseLayout
+  title={`${demo.title}: example course`}
+  description={`${demo.summary} A real course exported from NARI Studio.`}
+  breadcrumbs={[{ name: "Showcase", path: "/showcase/" }, { name: demo.title, path: `/showcase/${demo.slug}/` }]}
+>
+  <section class="pb-10 pt-12 sm:pt-16">
+    <div class="container-site">
+      <a href="/showcase/" class="text-sm font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">← All examples</a>
+      <p class="eyebrow mb-3 mt-6">{demo.kind}</p>
+      <h1 class="text-[clamp(2rem,1.5rem+2.4vw,3.25rem)] leading-[1.08] tracking-[-0.03em]">{demo.title}</h1>
+      <p class="mt-4 max-w-[44rem] text-lead text-ink-2">{demo.summary}</p>
+    </div>
+  </section>
+
+  <section class="pb-16" aria-label="Playable example">
+    <div class="container-site">
+      <div class="overflow-hidden rounded-[var(--radius-frame)] border border-[#1e2738] bg-product shadow-[0_24px_60px_-28px_rgba(14,20,32,0.45)]">
+        <iframe
+          src={src}
+          title={`${demo.title}: playable example course`}
+          class="block h-[620px] w-full max-sm:h-[560px]"
+          loading="lazy"
+          sandbox="allow-scripts allow-forms"
+          allow="fullscreen"
+        ></iframe>
+      </div>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+        <p>HTML5 export by NARI Studio v{manifest.appVersion}, built from the "{demo.template}" starter course.</p>
+        <a href={src} target="_blank" rel="noopener" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">Open full screen in a new tab</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-16" aria-label="About this example">
+    <div class="container-site grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <h2 class="text-h3">Try this</h2>
+        <ol class="mt-4 list-decimal space-y-2 pl-5 text-ink-2">
+          {demo.tryThis.map((step) => <li>{step}</li>)}
+        </ol>
+      </div>
+      <div class="lg:col-span-6">
+        <h2 class="text-h3">Capabilities shown</h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {demo.uses.map((use) => <li class="rounded-full bg-sunken px-3 py-1 text-sm font-medium text-ink-2">{use}</li>)}
+        </ul>
+        {demo.disclaimer && <p class="mt-6 text-sm text-muted">{demo.disclaimer}</p>}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14" aria-labelledby="other-title">
+    <div class="container-site">
+      <h2 id="other-title" class="text-sm font-semibold text-muted">More examples</h2>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+        {others.map((d) => <li><a href={`/showcase/${d.slug}/`} class="font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">{d.title}</a></li>)}
+      </ul>
+      <div class="mt-8"><Button href="/features/" variant="secondary" cta="demo-features">Explore features</Button></div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

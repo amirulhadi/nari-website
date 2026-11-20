@@ -1,0 +1,56 @@
+{
+  "app": "NARI Studio",
+  "appVersion": "0.9.0",
+  "capturedAt": "2026-11-20T08:55:49.647Z",
+  "viewport": {
+    "width": 1600,
+    "height": 1000
+  },
+  "scale": 2,
+  "shots": [
+    {
+      "name": "home",
+      "description": "NARI Studio home screen: new project, open, PowerPoint and Captivate import"
+    },
+    {
+      "name": "template-picker",
+      "description": "Starting a new course from one of the five starter templates"
+    },
+    {
+      "name": "editor-overview",
+      "description": "The editor: slide list, canvas, timeline and properties (Knowledge quiz template)"
+    },
+    {
+      "name": "editor-question",
+      "description": "Editing a multiple-choice question in a question pool"
+    },
+    {
+      "name": "editor-results",
+      "description": "Results slide with score, pass mark, review answers and try again"
+    },
+    {
+      "name": "preview-question",
+      "description": "Learner preview of a pooled multiple-choice question"
+    },
+    {
+      "name": "learner-question",
+      "description": "What the learner sees: a pooled multiple-choice question"
+    },
+    {
+      "name": "editor-branching",
+      "description": "A decision slide in the Branching scenario template; each choice leads to its own outcome"
+    },
+    {
+      "name": "editor-dragdrop",
+      "description": "Authoring a drag-and-drop exercise"
+    },
+    {
+      "name": "preview-dragdrop",
+      "description": "Learner view of the drag-and-drop exercise"
+    },
+    {
+      "name": "learner-dragdrop",
+      "description": "What the learner sees: a drag-and-drop exercise"
+    }
+  ]
+}

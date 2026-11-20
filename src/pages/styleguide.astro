@@ -1,0 +1,86 @@
+---
+// Internal design-system reference. Not linked, not indexed, excluded from the sitemap.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import StatusTag from "@/components/ui/StatusTag.astro";
+import Logo from "@/components/brand/Logo.astro";
+import Mark from "@/components/brand/Mark.astro";
+
+const colors = [
+  ["paper", "bg-paper"], ["surface", "bg-surface"], ["sunken", "bg-sunken"], ["line", "bg-line"],
+  ["ink", "bg-ink"], ["ink-2", "bg-ink-2"], ["muted", "bg-muted"], ["accent", "bg-accent"],
+  ["accent-soft", "bg-accent-soft"], ["amber", "bg-amber"], ["product", "bg-product"],
+];
+const type = [
+  ["Display", "text-display", "Build interactive courses."],
+  ["H2", "text-h2", "Everything a course needs."],
+  ["H3", "text-h3", "Question pools"],
+  ["Lead", "text-lead", "Design slides, add video, quizzes and branching."],
+  ["Body", "", "Each learner gets a random selection of questions in a random order."],
+  ["Small", "text-sm", "Plan contents are a proposal and may change before launch."],
+];
+---
+<BaseLayout title="Styleguide" noindex>
+  <div class="container-site space-y-20 py-16">
+    <div class="max-w-[44rem]">
+      <p class="eyebrow mb-4">Design system</p>
+      <h1 class="text-h2">NARI Studio styleguide</h1>
+      <p class="mt-5 text-lead text-ink-2">Tokens live in src/styles/global.css. Typeface: Manrope (variable, self-hosted).</p>
+    </div>
+
+    <section>
+      <h2 class="eyebrow mb-6">Brand</h2>
+      <div class="flex flex-wrap items-center gap-10">
+        <Logo size="lg" />
+        <Logo />
+        <Logo size="sm" />
+        <Mark size={64} tile title="NARI Studio mark" />
+        <Mark size={40} class="text-ink" />
+        <Mark size={16} tile />
+      </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Colour</h2>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+        {colors.map(([name, cls]) => (
+          <div><div class:list={["h-16 rounded-[var(--radius-control)] border border-line", cls]}></div><p class="mt-2 font-mono text-xs">{name}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Type</h2>
+      <div class="space-y-6">
+        {type.map(([name, cls, sample]) => (
+          <div class="grid gap-2 sm:grid-cols-[120px_1fr]"><span class="font-mono text-xs text-muted">{name}</span><p class:list={[cls, cls.startsWith("text-h") && "font-bold"]}>{sample}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Buttons</h2>
+      <div class="flex flex-wrap items-center gap-3">
+        <Button>Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button size="sm">Small</Button>
+        <Button size="lg">Large</Button>
+        <Button disabled>Disabled</Button>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Status tags</h2>
+      <div class="flex flex-wrap gap-3"><StatusTag status="available" /><StatusTag status="in-development" /><StatusTag status="planned" /></div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Form field</h2>
+      <div class="max-w-sm">
+        <label for="sg-email" class="block text-sm font-semibold">Work email</label>
+        <input id="sg-email" type="email" class="mt-2 h-11 w-full rounded-[var(--radius-control)] border border-line-strong bg-paper px-3.5 text-[0.9375rem]" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>
