@@ -1,7 +1,21 @@
 # NARI Studio Website — Phase 1: Product Review & Website Plan
 
-Status: **proposal for review — no website code written yet.**
+Status: **Phase 1 final (decisions recorded 2026-11-20). No website code written yet. Phase 2 waits for approval.**
 Date: 2026-11-20
+
+## 0. Decision log
+
+| # | Topic | Decision | Effect on the plan |
+|---|---|---|---|
+| D1 | Repository | **Separate GitHub repository** for the website | This folder is the repo; app and site deploy independently (§3) |
+| D2 | Primary CTA | **Join early access / waitlist.** No public Windows download yet | `/early-access` replaces `/download`; CTA text and target come from config so it can switch to "Download for Windows" later (§3.4, §4) |
+| D3 | Brand & contact | Public brand **"NARI Studio"**. No invented company name, email, phone or address | All unconfirmed details are `null` placeholders in `src/config/site.ts`; UI hides or shows "To be announced" for them (§3.4) |
+| D4 | Domain & hosting | **Cloudflare Pages** approved; domain not final | Site URL is an env variable; `*.pages.dev` until the domain is chosen; domain guide in Phase 6 |
+| D5 | Free plan | **Not finalised.** Separate feature-matrix proposal requested; no enforcement | See [subscription-feature-matrix.md](subscription-feature-matrix.md); §6 below is superseded by it |
+| D6 | Logo | Explore **several directions** before finalising | See [brand/logo-directions.md](brand/logo-directions.md) |
+| D7 | Typography | **Sans-serif only**: choose from Inter, Geist, Manrope | Recommendation: **Manrope** (§8) |
+| D8 | Stack | **Astro + Tailwind CSS + TypeScript** approved | §3.2 |
+
 Product source reviewed: `D:\Projects NARI\NARI` (v0.9.0 release candidate), including `README.md`, `PROJECT_CONTEXT.md` (§1–31), `docs/product.md`, `docs/roadmap.md`, `docs/release.md`, `src-tauri/tauri.conf.json`, the app's styles and Home screen.
 
 ---
@@ -143,7 +157,37 @@ NARI Website/
     layouts/BaseLayout.astro SEO head, OG, JSON-LD, header/footer
     pages/                   routes below
     styles/tokens.css        design tokens (light + dark)
+  functions/                 (only if approved) Cloudflare Pages Function for the waitlist form
 ```
+
+### 3.4 Configuration instead of hard-coded facts
+
+`src/config/site.ts` holds everything that is not yet confirmed or will change at launch:
+
+```ts
+export const site = {
+  brand: "NARI Studio",
+  url: import.meta.env.PUBLIC_SITE_URL ?? "https://nari-studio.pages.dev", // custom domain later
+  legalName: null,          // registered company name — not confirmed
+  contact: { general: null, sales: null, enterprise: null, support: null }, // emails — not confirmed
+  primaryCta: { mode: "waitlist" },   // "waitlist" | "download"
+  flags: { accountsEnabled: false, pricingPublished: false, waitlistFormEnabled: false, downloadsEnabled: false },
+};
+```
+
+Rules: a `null` contact hides the channel and shows "Contact details will be published at launch"; the footer shows "© NARI Studio" until `legalName` is set; `primaryCta.mode = "download"` swaps every "Join early access" button to "Download for Windows" and points to `/download` — one change, no redesign.
+
+### 3.5 Early-access form — needs one more approval
+
+The waitlist needs somewhere to receive sign-ups. Options, all staying on the approved Cloudflare platform:
+
+| Option | What it is | Trade-off |
+|---|---|---|
+| **A (recommended)** | Cloudflare Pages Function + **D1** database (+ **Turnstile** anti-spam), export as CSV | No new vendor; we own the data; needs a privacy notice before going live |
+| B | Third-party form/newsletter service (e.g. Buttondown, Tally) | Quicker, but a new processor of personal data — needs your approval |
+| C | No form yet: the early-access page explains the programme and the button is hidden | Nothing collected, nothing broken; weakest conversion |
+
+Until a choice is approved the site ships with **C** (`waitlistFormEnabled: false`) — no fake form.
 
 ---
 
@@ -151,18 +195,19 @@ NARI Website/
 
 | Route | Purpose | Primary CTA |
 |---|---|---|
-| `/` | Understand in 5 s, see the product, start | Get started |
-| `/features` | Capabilities by category, each with a real screenshot/clip; status tags | Get started / See examples |
+| `/` | Understand in 5 s, see the product, start | Join early access |
+| `/features` | Capabilities by category, each with a real screenshot/clip; status tags | Join early access / See examples |
 | `/solutions` | Overview of use cases | — |
-| `/solutions/corporate-training` | Problem → how NARI helps → template to start from | Get started |
+| `/solutions/corporate-training` | Problem → how NARI helps → template to start from | Join early access |
 | `/solutions/employee-onboarding` | 〃 | |
 | `/solutions/compliance-training` | 〃 (pools, pass marks, SCORM completion) | |
 | `/solutions/education` | Educators & institutions | |
 | `/solutions/freelancers` | Independent / freelance developers | |
 | `/showcase` | Gallery of real courses built with NARI Studio | Try the demo |
 | `/showcase/[slug]` | **Live, playable exported course** embedded + how it was built | Build one like this |
-| `/pricing` | Plans, monthly/annual, comparison, FAQ | Get started / Talk to sales |
-| `/download` | Target of "Get started": system requirements, installer, release notes (or early-access form — see decisions) | Download for Windows |
+| `/pricing` | Plans, monthly/annual, comparison, FAQ | Join early access / Contact sales |
+| `/early-access` | Target of every primary CTA: what early access includes, who it's for, platform (Windows first), sign-up form (if approved, §3.5) | Join early access |
+| *(flagged off)* `/download` | Created when `primaryCta.mode = "download"`: system requirements, installer, release notes | Download for Windows |
 | `/about` | Vision, mission, principles | |
 | `/contact` | General / Sales / Enterprise / Support routes | |
 | `/changelog` | Release notes (trust signal, cheap to maintain) | |
@@ -174,15 +219,15 @@ Solutions start as 5 focused pages (better for search than one long page); a six
 
 ### Navigation
 
-- **Header:** Logo · Features · Solutions ▾ · Showcase · Pricing · Download | *(Sign in — hidden until accounts exist)* · **[Get started]**
-- **Footer:** Product (Features, Showcase, Pricing, Download, Changelog) · Solutions · Company (About, Contact) · Legal · "Not affiliated with Adobe or Microsoft" note · © line.
+- **Header:** Logo · Features · Solutions ▾ · Showcase · Pricing | *(Sign in — hidden until accounts exist)* · **[Join early access]**
+- **Footer:** Product (Features, Showcase, Pricing, Early access, Changelog) · Solutions · Company (About, Contact) · Legal · "Not affiliated with Adobe or Microsoft" note · © line.
 
 ---
 
 ## 5. Page plans (key sections)
 
 ### Home
-1. **Hero** — H1 + sub-headline, `Get started` + `Explore features`, small line "Windows · Works offline · SCORM 1.2 & 2004". Below: a **large real screenshot of the editor** (slide canvas + timeline + inspector), in a minimal window frame — the visual centrepiece.
+1. **Hero** — H1 + sub-headline, `Join early access` (primary, from config) + `Explore features`, small line "Early access · Windows first · Works offline · SCORM 1.2 & 2004". Below: a **large real screenshot of the editor** (slide canvas + timeline + inspector), in a minimal window frame — the visual centrepiece.
 2. **Workflow strip** — Build → Interact → Preview → Publish, each a cropped real UI detail.
 3. **Benefits (3)** — Focused & offline · Real interactivity · LMS-ready output.
 4. **Feature highlights (alternating, 4 max)** — Drag-and-drop & quizzes · Branching & live text · Video with chroma key & captions · Import report for PowerPoint/Captivate.
@@ -205,11 +250,13 @@ Real courses built from the app's starter templates, customised with neutral con
 Vision ("Professional e-learning authoring should be focused, affordable and in the author's control"), mission, principles (Honest output, Your files stay yours, Accessible by default, Standards first). No history, customer counts or market claims.
 
 ### Contact
-Four cards (General, Sales, Enterprise, Support) each with the approved channel. Until a form backend is approved: **mailto links to verified addresses only**; support also points to the Download page's diagnostics instructions (About → Copy diagnostics already exists in the app).
+Four cards (General, Sales, Enterprise, Support), each driven by `site.contact.*`. While an address is `null` the card describes what the channel is for and says "Contact details will be published at launch", with a link to Early access — no dead mailto links, no invented addresses. Support also mentions the app's About → Copy diagnostics feature.
 
 ---
 
 ## 6. Pricing presentation & subscription model
+
+> **Superseded for tier contents by [subscription-feature-matrix.md](subscription-feature-matrix.md) (D5).** The pricing-page design in §6.3 still applies, with CTAs changed to "Join early access" while `pricingPublished` is false.
 
 ### 6.1 What can sensibly be tiered — given the product as it is
 
@@ -255,7 +302,7 @@ Optional alternative to discuss: limit Free to SCORM *1.2 only* or N slides per 
 ### 6.3 Pricing page design
 
 - Header: "Simple plans that grow with you." Monthly/Annual **toggle** (annual shows "save X%" from config).
-- 4 plan cards; Pro highlighted. Price field from `pricing.ts`; while `price: null` the card shows **"Pricing at launch"** and the CTA becomes **"Get started free"** / **"Join the Pro waitlist"** / **"Contact sales"** (depending on approved flows).
+- 4 plan cards; Pro highlighted. Price field from `pricing.ts`; while `price: null` the card shows **"Pricing at launch"** and the CTA becomes **"Join early access"** / **"Contact sales"** (depending on approved flows).
 - Comparison table generated from the same config, with **status tags** (Available / Planned) so we never sell what isn't built.
 - Free-trial line driven by `trialDays` (null = hidden).
 - Upgrade messaging: "Start on Free — your projects carry over when you upgrade. Nothing to migrate."
@@ -328,8 +375,7 @@ A full version of this goes into `docs/licensing-architecture.md` in Phase 4.
 | Accent | **Teal** (continuity with the app): `#0F766E` for links/buttons on light, `#14B8A6` highlights; used sparingly |
 | Product dark | `#0F172A` slate (app chrome) for screenshot frames and one dark showcase band |
 | Status tags | Available = teal, In development = amber, Planned = slate outline |
-| Display type | A refined serif (e.g. **Instrument Serif** or **Fraunces**) — echoes the app's serif wordmark |
-| Body/UI type | **Inter** (or Geist) — self-hosted, variable |
+| Typeface (D7) | **Manrope** variable, sans-only, self-hosted. Display 600–700 with −2% to −3% tracking; body 400/500 at 17 px. Monospace for file names/code: system `ui-monospace` stack (no extra font) |
 | Scale | 12 / 14 / 16 / 18 / 20 / 24 / 32 / 44 / 60 / 76 px; body 17px/1.6 |
 | Spacing | 4-px base; section padding 96–160 px desktop, 64 px mobile; content max 1200 px, text max 68ch |
 | Radius | 6 px controls, 12 px cards, 14 px product frames |
@@ -338,7 +384,20 @@ A full version of this goes into `docs/licensing-architecture.md` in Phase 4.
 | Dark mode | Supported via tokens (respects system), light is the default identity |
 | Imagery | Only real UI captures and real exported courses; simple line icons (inline SVG, one set) — **no stock photos** |
 
-**Logo:** the current app icon is the default Tauri placeholder. Proposal: a simple **"N" monogram built from a slide frame + play/branch mark** with a serif "NARI Studio" wordmark, delivered as SVG in Phase 2 for approval — and reusable as the app icon later.
+**Logo:** the current app icon is the default Tauri placeholder. Four directions are in [brand/logo-directions.md](brand/logo-directions.md) (board: `brand/logo-directions.html`); the chosen one is refined in Phase 2.
+
+**Why Manrope (D7):**
+
+| | Inter | Geist | **Manrope** |
+|---|---|---|---|
+| Character | Neutral, the default of modern SaaS | Crisp, technical | Geometric-modern with slightly rounded, open forms |
+| Distinctiveness | Low — makes the site look like every template | Strongly associated with Vercel/Next.js | **High at headline sizes without being quirky** |
+| Fit with "learning + professional" | Corporate | Developer-tool | **Warm, approachable, still premium** |
+| Body legibility at 16–17 px | Excellent | Very good | Very good (slightly wider — give 0.01 em less tracking) |
+| Weights / variable | 100–900 | 100–900 | 200–800 variable — enough |
+| Licence | OFL | OFL | OFL |
+
+Manrope gives the brand a recognisable voice, suits a creative-tools product used by educators and trainers, and pairs with the monogram directions. Inter remains the fallback if body-text tests disappoint.
 
 Components in the design system: Button (primary/secondary/ghost/link, sm/md/lg), Badge/StatusTag, Card, Section header, ProductFrame (window chrome + caption), FeatureRow, PlanCard, ComparisonTable, FAQ (native `<details>`), Callout, Form fields (for later), Header with mobile menu, Footer.
 
@@ -359,11 +418,11 @@ Limitation: mock mode can't run import or native file dialogs — the Import rep
 
 | Stage | Visitor need | Page | CTA |
 |---|---|---|---|
-| Discover | "What is this?" | Home hero, Solutions (search landing) | Get started · Explore features |
+| Discover | "What is this?" | Home hero, Solutions (search landing) | Join early access · Explore features |
 | Understand | "Can it do what I need?" | Features | See examples |
-| Evaluate | "What does the output look like?" | Showcase (playable) | Build one like this → Get started |
-| Compare | "What does it cost / which plan?" | Pricing | Get started free · Contact sales |
-| Act | | Download / Contact | Download for Windows · Enquiry |
+| Evaluate | "What does the output look like?" | Showcase (playable) | Build one like this → Join early access |
+| Compare | "What does it cost / which plan?" | Pricing | Join early access · Contact sales |
+| Act | | Early access / Contact | Join early access (later: Download for Windows) · Enquiry |
 | Convert (future) | | Account portal | Upgrade |
 
 Prepared integration points (no services connected): a single `analytics.ts` event helper (no-op by default) on every CTA with `data-cta` attributes; newsletter/lead forms behind flags; contact routes in `site.ts`.
@@ -376,7 +435,7 @@ Prepared integration points (no services connected): a single `analytics.ts` eve
 |---|---|---|
 | **2 — Design system & Home** | Repo setup (Astro, Tailwind, tokens), logo proposal, Header/Footer/mobile nav, UI components, capture pipeline + first real screenshots, Homepage | Lighthouse ≥ 95 on Home, mobile/desktop review |
 | **3 — Marketing pages** | Features (with status tags), 5 Solutions pages, Showcase with 3–4 playable demo courses, About, Contact | All copy traceable to verified capabilities |
-| **4 — Commercial** | Pricing page from config (toggle, comparison, FAQ), Download page, flagged account entry points, `docs/licensing-architecture.md`, pricing memo for approval | Prices still placeholders until approved |
+| **4 — Commercial** | Pricing page from config (toggle, comparison, FAQ), Early-access page (+ flagged Download page), flagged account entry points, `docs/licensing-architecture.md`, pricing memo for approval | Prices still placeholders until approved |
 | **5 — Polish** | SEO (titles, meta, OG images, sitemap, robots, JSON-LD `SoftwareApplication` + `Organization` + `FAQPage`), accessibility audit (axe, keyboard, contrast), performance, cross-browser (Chrome, Edge, Firefox, Safari/iOS) | axe clean, CWV good |
 | **6 — Production** | Cloudflare Pages config, `_headers` (CSP etc.), env docs, domain/DNS guide, production build, final QA, README | Preview deploy reviewed |
 
@@ -384,14 +443,30 @@ After each phase: review, fix, summary, docs update, next tasks — as requested
 
 ---
 
-## 12. Decisions needed from you before / during Phase 2
+## 12. Proposed Phase 2 tasks (awaiting approval)
 
-1. **Repository** — confirm a separate repo in `D:\01_SOFTWARE_DEVELOPMENT\NARI Website` (recommended).
-2. **"Get started" destination** — (a) **Download for Windows** (installer from GitHub Releases / storage; ideally after code signing), or (b) **Join early access** (needs a form service → approval), or (c) Download now, early-access for macOS. *Recommended: (a) + macOS waitlist later.*
-3. **Contact details** — the email address(es)/domain to publish, and the company/legal name for the footer, EULA and privacy policy.
-4. **Domain & hosting** — the planned domain; Cloudflare Pages OK?
-5. **Free plan model** — approve "full features, badge on export, non-commercial" (recommended) or prefer another split.
-6. **Logo** — OK for me to propose a new mark in Phase 2 (and later reuse it as the app icon)?
-7. **Typeface pairing** — serif + Inter as proposed (Instrument Serif or Fraunces), or sans-only.
+| # | Task | Output |
+|---|---|---|
+| 2.1 | Scaffold Astro + Tailwind 4 + TypeScript (strict), Prettier, `astro check` in CI (GitHub Actions), Cloudflare Pages build settings | Running site skeleton, green CI |
+| 2.2 | Config layer: `site.ts` (placeholders + flags), `navigation.ts`, `features.ts` (status per feature, sourced from the app's as-built notes), `pricing.ts` skeleton | Single source for facts |
+| 2.3 | Design tokens (`tokens.css`): colours light/dark, Manrope variable self-hosted, type scale, spacing, radius, motion | Token file + `/styleguide` page (noindex) |
+| 2.4 | Logo: refine the approved direction → SVG mark, wordmark, lockups, favicon set, OG image template | `public/brand/*`, usage notes |
+| 2.5 | Core components: Button, Badge/StatusTag, Card, Section, ProductFrame, FeatureRow, CTA band, Header (desktop + accessible mobile menu), Footer | Component set used by all pages |
+| 2.6 | BaseLayout: SEO head (title, description, canonical, OG/Twitter), JSON-LD `Organization` + `SoftwareApplication` (no ratings/prices), skip link | SEO-ready layout |
+| 2.7 | Screenshot pipeline in `scripts/capture/`: runs the app in browser mock mode from its own repo (read-only), opens starter templates, captures editor views | First real screenshots |
+| 2.8 | Homepage (all sections from §5) with real screenshots, early-access CTA from config | Complete Home |
+| 2.9 | `/early-access` page with option **C** (no form) unless §3.5 is approved | No non-functional buttons |
+| 2.10 | Responsive + accessibility + Lighthouse pass on Home; Phase 2 review, docs update | Phase 2 summary |
 
-Until answered I will use clearly marked placeholders and feature flags — nothing will pretend to work.
+Not in Phase 2: other marketing pages (Phase 3), pricing page (Phase 4), any data collection, analytics or third-party service.
+
+## 13. Open items needing your input
+
+| # | Item | When needed |
+|---|---|---|
+| O1 | **GitHub repo creation** — the GitHub CLI isn't installed and not signed in here (see final summary for options) | Before first push |
+| O2 | **Logo direction** — pick one (or a mix) from [brand/logo-directions.md](brand/logo-directions.md) | Phase 2 task 2.4 |
+| O3 | **Subscription matrix** — approve or amend [subscription-feature-matrix.md](subscription-feature-matrix.md) | Before Phase 4 |
+| O4 | **Early-access form** — option A, B or C (§3.5) | Phase 2 task 2.9 (C is the safe default) |
+| O5 | Domain, contact emails, legal name | Before launch (placeholders until then) |
+| O6 | Privacy policy / terms text (needed before collecting any email) | Before O4 goes live |
