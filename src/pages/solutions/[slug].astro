@@ -14,7 +14,11 @@ const solution = getSolution(Astro.params.slug!)!;
 const demo = getDemo(solution.demo);
 const others = solutions.filter((s) => s.slug !== solution.slug);
 ---
-<BaseLayout title={solution.seoTitle} description={solution.metaDescription}>
+<BaseLayout
+  title={solution.seoTitle}
+  description={solution.metaDescription}
+  breadcrumbs={[{ name: "Solutions", path: "/solutions/" }, { name: solution.label, path: `/solutions/${solution.slug}/` }]}
+>
   <PageHero eyebrow="Solutions" title={solution.title} intro={`For ${solution.audience}.`} />
 
   <section class="border-t border-line py-16 lg:py-24" aria-labelledby="challenge-title">

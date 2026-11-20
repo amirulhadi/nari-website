@@ -16,6 +16,8 @@ export const site = {
   brand: "NARI Studio",
   shortBrand: "nari",
   tagline: "Interactive e-learning, authored on your desktop.",
+  /** <title> for the homepage (kept under 60 characters with the brand). */
+  homeTitle: "Desktop e-learning authoring software",
   description:
     "NARI Studio is a desktop authoring tool for building interactive e-learning courses with quizzes, branching and video, then publishing them as SCORM or HTML5 for any learning management system.",
 

@@ -45,7 +45,7 @@ const upcoming = featureGroups.flatMap((g) =>
 ---
 <BaseLayout
   title="Features: interactive e-learning authoring"
-  description="Everything in NARI Studio: slide authoring, timeline, media, quizzes, branching, accessibility checks, SCORM and HTML5 publishing, and PowerPoint and Captivate import."
+  description="Everything in NARI Studio: slide authoring, timeline, media, quizzes, branching, accessibility checks, SCORM and HTML5 export, and PowerPoint import."
 >
   <PageHero
     eyebrow="Features"
@@ -54,7 +54,7 @@ const upcoming = featureGroups.flatMap((g) =>
   />
 
   <div class="container-site">
-    <nav aria-label="Feature categories" class="sticky top-16 z-30 -mx-4 overflow-x-auto border-y border-line bg-paper/95 px-4 sm:mx-0 sm:rounded-full sm:border sm:px-3">
+    <nav aria-label="Feature categories" class="sticky top-16 z-30 -mx-4 overflow-x-auto border-y border-line bg-paper px-4 sm:mx-0 sm:rounded-full sm:border sm:px-3">
       <ul class="flex min-w-max gap-1 py-2">
         {featureGroups.map((group) => (
           <li><a href={`#${group.id}`} class="block rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-2 transition-colors hover:bg-sunken hover:text-ink">{group.title}</a></li>

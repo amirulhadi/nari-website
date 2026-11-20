@@ -54,13 +54,20 @@
   --nari-line-strong: #d3cfc5;
   --nari-ink: #0e1420;
   --nari-ink-2: #454e5e;
-  --nari-muted: #6b7382;
+  --nari-muted: #5c6474;
   --nari-accent: #0f766e;
   --nari-accent-strong: #0b5e57;
   --nari-accent-soft: #e3f1ef;
   --nari-on-accent: #ffffff;
   --nari-amber: #92580a;
   --nari-amber-soft: #fbf0dc;
+  /* Closing call-to-action band */
+  --nari-band-bg: #0e1420;
+  --nari-band-border: #0e1420;
+  --nari-band-fg: #f7f6f2;
+  --nari-band-fg-2: #c4cad4;
+  --nari-band-btn-bg: #f7f6f2;
+  --nari-band-btn-fg: #0e1420;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -80,6 +87,12 @@
     --nari-on-accent: #04201d;
     --nari-amber: #f2b45a;
     --nari-amber-soft: #2a2111;
+    --nari-band-bg: #121925;
+    --nari-band-border: #2f3a4c;
+    --nari-band-fg: #eef1f5;
+    --nari-band-fg-2: #b7c0cc;
+    --nari-band-btn-bg: #2dd4bf;
+    --nari-band-btn-fg: #04201d;
   }
 }
 
@@ -99,6 +112,12 @@
   --nari-on-accent: #04201d;
   --nari-amber: #f2b45a;
   --nari-amber-soft: #2a2111;
+  --nari-band-bg: #121925;
+  --nari-band-border: #2f3a4c;
+  --nari-band-fg: #eef1f5;
+  --nari-band-fg-2: #b7c0cc;
+  --nari-band-btn-bg: #2dd4bf;
+  --nari-band-btn-fg: #04201d;
 }
 
 @layer base {

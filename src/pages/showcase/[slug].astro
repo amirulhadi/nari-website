@@ -16,6 +16,7 @@ const others = demos.filter((d) => d.slug !== demo.slug);
 <BaseLayout
   title={`${demo.title}: example course`}
   description={`${demo.summary} A real course exported from NARI Studio.`}
+  breadcrumbs={[{ name: "Showcase", path: "/showcase/" }, { name: demo.title, path: `/showcase/${demo.slug}/` }]}
 >
   <section class="pb-10 pt-12 sm:pt-16">
     <div class="container-site">

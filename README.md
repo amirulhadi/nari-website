@@ -8,7 +8,8 @@ The app lives in its own repository (`D:\Projects NARI\NARI`); this site is inde
 - Phase 1 (planning) complete: [docs/phase-1-plan.md](docs/phase-1-plan.md), [subscription matrix](docs/subscription-feature-matrix.md), [logo directions](docs/brand/logo-directions.md).
 - Phase 2 (design system + homepage): [docs/phase-2-summary.md](docs/phase-2-summary.md).
 - Phase 3 (features, solutions, showcase, about, contact): [docs/phase-3-summary.md](docs/phase-3-summary.md).
-- Phase 4 (pricing, account entry points, licensing architecture) built, awaiting review: [docs/phase-4-summary.md](docs/phase-4-summary.md), [licensing architecture](docs/licensing-architecture.md), [pricing memo outline](docs/pricing-memo-outline.md).
+- Phase 4 (pricing, account entry points, licensing architecture): [docs/phase-4-summary.md](docs/phase-4-summary.md), [licensing architecture](docs/licensing-architecture.md), [pricing memo outline](docs/pricing-memo-outline.md).
+- Phase 5 (accessibility, performance, SEO, dark mode, tests) done, awaiting review: [docs/phase-5-summary.md](docs/phase-5-summary.md), [browser support](docs/browser-support.md).
 
 ## Develop
 ```bash
@@ -29,7 +30,10 @@ Everything that may change lives in `src/config/`: `site.ts` (brand, contact pla
 npm run capture    # writes src/assets/screenshots/*.png + manifest.json
 npm run brand      # regenerates favicons and the Open Graph image
 npm run demos      # rebuilds the Showcase example courses with the app's own exporter
-npm run test:site  # after a build: crawls every page under the production headers
+npm run test:site      # after a build: crawls every page under the production headers
+npm run test:a11y      # axe-core on every page, light and dark, desktop and phone
+npm run test:keyboard  # keyboard, 320 px reflow, reduced motion, no-JS
+npm run test:seo       # titles, descriptions, canonical, sitemap, structured data
 ```
 Needs Microsoft Edge or Chrome installed (set `CAPTURE_BROWSER=chrome` to switch).
 

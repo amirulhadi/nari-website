@@ -34,13 +34,14 @@ const {
         <span class="size-2.5 rounded-full bg-white/15"></span>
         <span class="size-2.5 rounded-full bg-white/15"></span>
         <span class="size-2.5 rounded-full bg-white/15"></span>
-        <span class="ml-3 text-[11px] font-medium text-white/45">{title}</span>
+        <span class="ml-3 text-[11px] font-medium text-white/65">{title}</span>
       </div>
     )}
     <Picture
       src={src}
       alt={alt}
       formats={["avif", "webp"]}
+      fallbackFormat="webp"
       widths={[640, 960, 1280, 1600, 2400]}
       sizes={sizes}
       loading={priority ? "eager" : "lazy"}

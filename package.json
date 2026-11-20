@@ -15,7 +15,10 @@
     "capture": "node scripts/capture/capture.mjs",
     "brand": "node scripts/brand/render.mjs",
     "demos": "node scripts/demos/build-demos.mjs",
-    "test:site": "node scripts/test/site-check.mjs"
+    "test:site": "node scripts/test/site-check.mjs",
+    "test:a11y": "node scripts/test/a11y-check.mjs",
+    "test:keyboard": "node scripts/test/keyboard-check.mjs",
+    "test:seo": "node scripts/test/seo-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.6",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "axe-core": "4.11.0",
     "playwright-core": "1.65.1",
     "typescript": "5.9.3"
   }

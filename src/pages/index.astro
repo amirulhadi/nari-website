@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Button from "@/components/ui/Button.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import StatusTag from "@/components/ui/StatusTag.astro";
 import ProductFrame from "@/components/ui/ProductFrame.astro";
@@ -125,7 +126,7 @@ const softwareJsonLd = {
 };
 ---
 <BaseLayout
-  description="NARI Studio is a desktop e-learning authoring tool. Build interactive courses with quizzes, branching, drag-and-drop and video, then publish SCORM 1.2, SCORM 2004 or HTML5 for any LMS."
+  description="A desktop e-learning authoring tool. Build interactive courses with quizzes, branching and video, then publish SCORM or HTML5 for your LMS."
   structuredData={[softwareJsonLd]}
 >
   <!-- Hero -->
@@ -346,17 +347,5 @@ const softwareJsonLd = {
   </section>
 
   <!-- Final CTA -->
-  <section class="pb-24 lg:pb-32" aria-labelledby="cta-title">
-    <div class="container-site">
-      <div class="rounded-[24px] bg-ink px-6 py-16 text-center sm:px-12 lg:py-20">
-        <h2 id="cta-title" class="text-h2 !text-paper">Build your next course with NARI Studio.</h2>
-        <p class="mx-auto mt-5 max-w-xl text-lead !text-paper/70">
-          We're opening NARI Studio to a small group of course creators first. Join early access to be among them.
-        </p>
-        <div class="mt-9 flex justify-center">
-          <a href={cta.href} data-cta="footer-cta" class="inline-flex h-12 items-center justify-center rounded-[var(--radius-control)] bg-paper px-6 font-semibold text-ink transition-colors hover:bg-paper/90">{cta.label}</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <CtaBand />
 </BaseLayout>

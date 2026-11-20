@@ -105,7 +105,7 @@ export const solutions: Solution[] = [
     title: "Educational modules and interactive learning",
     label: "Education",
     summary: "Interactive lessons and activities for educators and institutions.",
-    seoTitle: "Interactive lessons for educators and institutions",
+    seoTitle: "Interactive lessons for educators",
     metaDescription:
       "Build interactive lessons, drag-and-drop activities and quizzes with NARI Studio and publish them as SCORM or HTML5 for your learning platform.",
     audience: "Teachers, lecturers, instructional technologists and institutional learning teams",
