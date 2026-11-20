@@ -2,8 +2,9 @@
 import Logo from "@/components/brand/Logo.astro";
 import Button from "@/components/ui/Button.astro";
 import { mainNav, resolve } from "@/config/navigation";
-import { primaryCta, site } from "@/config/site";
+import { accountUrl, primaryCta, site } from "@/config/site";
 
+const signIn = accountUrl("signIn"); // null until an account system exists
 const links = resolve(mainNav);
 const cta = primaryCta();
 ---
@@ -22,8 +23,8 @@ const cta = primaryCta();
     </nav>
 
     <div class="ml-auto flex items-center gap-2">
-      {site.flags.accountsEnabled && (
-        <Button href="/signin/" variant="ghost" size="sm" class="hidden md:inline-flex">Sign in</Button>
+      {signIn && (
+        <Button href={signIn} variant="ghost" size="sm" class="hidden md:inline-flex" cta="header-sign-in">Sign in</Button>
       )}
       <Button href={cta.href} size="sm" cta="header-primary" class="hidden sm:inline-flex">{cta.label}</Button>
       <button

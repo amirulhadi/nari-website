@@ -149,6 +149,16 @@
   }
 }
 
+/* Billing toggle: show only the price text for the selected period. */
+[data-billing-root][data-billing="monthly"] [data-when="annual"],
+[data-billing-root][data-billing="annual"] [data-when="monthly"] {
+  display: none;
+}
+/* Controls that need JavaScript stay hidden without it. */
+html:not(.js) [data-js-only] {
+  display: none;
+}
+
 /* Gentle reveal on scroll; disabled for reduced motion and when JS is off. */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {

@@ -35,6 +35,19 @@
     });
   }
 
+  // Billing period toggle: flips data-billing on the page's [data-billing-root].
+  const billingRoot = document.querySelector("[data-billing-root]");
+  const billingButtons = document.querySelectorAll("[data-billing-set]");
+  if (billingRoot && billingButtons.length) {
+    billingButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const mode = button.getAttribute("data-billing-set");
+        billingRoot.setAttribute("data-billing", mode);
+        billingButtons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+      });
+    });
+  }
+
   // Reveal on scroll (the CSS only animates when reduced motion is not requested).
   const items = document.querySelectorAll("[data-reveal]");
   if (!("IntersectionObserver" in window)) {

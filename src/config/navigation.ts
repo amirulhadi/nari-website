@@ -18,7 +18,7 @@ export const mainNav: NavItem[] = [
   { label: "Features", href: "/features/", ready: true },
   { label: "Solutions", href: "/solutions/", ready: true },
   { label: "Showcase", href: "/showcase/", ready: true },
-  { label: "Pricing", href: "/pricing/", ready: false, fallback: "/#plans" },
+  { label: "Pricing", href: "/pricing/", ready: true },
 ];
 
 export const footerNav: { title: string; items: NavItem[] }[] = [
@@ -29,7 +29,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
       { label: "Features", href: "/features/", ready: true },
       { label: "Publishing", href: "/features/#publishing", ready: true },
       { label: "Showcase", href: "/showcase/", ready: true },
-      { label: "Pricing", href: "/pricing/", ready: false, fallback: "/#plans" },
+      { label: "Pricing", href: "/pricing/", ready: true },
       { label: "Early access", href: "/early-access/", ready: true },
     ],
   },

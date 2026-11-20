@@ -5,7 +5,8 @@ import SectionHeader from "@/components/ui/SectionHeader.astro";
 import StatusTag from "@/components/ui/StatusTag.astro";
 import ProductFrame from "@/components/ui/ProductFrame.astro";
 import { featureGroups } from "@/config/features";
-import { plans, pricing } from "@/config/pricing";
+import { plans } from "@/config/pricing";
+import PlanCard from "@/components/pricing/PlanCard.astro";
 import { primaryCta, site } from "@/config/site";
 
 import editorQuestion from "@/assets/screenshots/editor-question.png";
@@ -335,22 +336,11 @@ const softwareJsonLd = {
         title="Start free. Upgrade when you publish professionally."
         intro="A complete Free plan, with paid plans for commercial work and teams. Pricing will be announced at launch."
       />
-      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {plans.map((plan) => (
-          <div class:list={["flex flex-col rounded-[var(--radius-card)] border bg-surface p-6", plan.featured ? "border-ink" : "border-line"]}>
-            <h3 class="text-h3">{plan.name}</h3>
-            <p class="mt-1 min-h-[2.75rem] text-sm text-muted">{plan.audience}</p>
-            <p class="mt-4 text-lg font-bold tracking-[-0.01em]">
-              {plan.monthly === 0 ? "No charge" : plan.unit === "custom" ? "Custom" : "Announced at launch"}
-            </p>
-            <ul class="mt-5 space-y-2 text-sm text-ink-2">
-              {plan.highlights.map((point) => <li>{point}</li>)}
-            </ul>
-          </div>
-        ))}
+      <div data-billing-root data-billing="monthly" class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {plans.map((plan) => <PlanCard plan={plan} />)}
       </div>
       <p class="mt-6 text-sm text-muted">
-        Plan contents are a proposal and may change before launch.{pricing.trialDays ? ` Paid plans include a ${pricing.trialDays}-day free trial.` : ""}
+        Plan contents are a proposal and may change before launch. <a href="/pricing/" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">Compare plans in detail</a>.
       </p>
     </div>
   </section>

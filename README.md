@@ -7,7 +7,8 @@ The app lives in its own repository (`D:\Projects NARI\NARI`); this site is inde
 ## Status
 - Phase 1 (planning) complete: [docs/phase-1-plan.md](docs/phase-1-plan.md), [subscription matrix](docs/subscription-feature-matrix.md), [logo directions](docs/brand/logo-directions.md).
 - Phase 2 (design system + homepage): [docs/phase-2-summary.md](docs/phase-2-summary.md).
-- Phase 3 (features, solutions, showcase, about, contact) built, awaiting review: [docs/phase-3-summary.md](docs/phase-3-summary.md).
+- Phase 3 (features, solutions, showcase, about, contact): [docs/phase-3-summary.md](docs/phase-3-summary.md).
+- Phase 4 (pricing, account entry points, licensing architecture) built, awaiting review: [docs/phase-4-summary.md](docs/phase-4-summary.md), [licensing architecture](docs/licensing-architecture.md), [pricing memo outline](docs/pricing-memo-outline.md).
 
 ## Develop
 ```bash

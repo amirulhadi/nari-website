@@ -53,6 +53,32 @@ export const site = {
   },
 } as const;
 
+/**
+ * Account entry points. There is NO account system yet. When one exists it will be a
+ * separate app (see docs/licensing-architecture.md); set `account.appUrl` to its origin
+ * and `flags.accountsEnabled = true` to switch these links on. Until then no account
+ * link is rendered anywhere, so nothing pretends to work.
+ */
+export const account = {
+  /** Origin of the future account / billing portal, e.g. "https://account.example.com". */
+  appUrl: null as string | null,
+  paths: {
+    signIn: "/sign-in",
+    signUp: "/sign-up",
+    startTrial: "/sign-up?trial=1",
+    manageAccount: "/account",
+    manageSubscription: "/account/billing",
+  },
+} as const;
+
+export type AccountLinkKey = keyof typeof account.paths;
+
+/** Absolute URL for an account action, or null while accounts are not enabled. */
+export function accountUrl(key: AccountLinkKey): string | null {
+  if (!site.flags.accountsEnabled || !account.appUrl) return null;
+  return new URL(account.paths[key], account.appUrl).href;
+}
+
 export function primaryCta() {
   return site.primaryCta.mode === "download" && site.flags.downloadsEnabled
     ? { label: "Download for Windows", href: "/download/" }

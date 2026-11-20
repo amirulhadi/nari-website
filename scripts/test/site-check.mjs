@@ -111,6 +111,39 @@ for (const [href, from] of internalLinks) {
   await page.close();
 }
 
+// Pricing page behaviour: billing toggle, FAQ, comparison table, no dead account links.
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`${base}/pricing/`);
+  const visible = (sel) => page.locator(sel).evaluateAll((els) => els.filter((e) => e.offsetParent !== null).length);
+  if ((await visible('[data-plan] [data-when="monthly"]')) !== 4) fail("pricing", "monthly prices should show by default for all 4 plans");
+  if ((await visible('[data-plan] [data-when="annual"]')) !== 0) fail("pricing", "annual prices should be hidden by default");
+  await page.getByRole("button", { name: "Annual", exact: true }).click();
+  if ((await visible('[data-plan] [data-when="annual"]')) !== 4) fail("pricing", "annual prices did not show after toggling");
+  if ((await visible('[data-plan] [data-when="monthly"]')) !== 0) fail("pricing", "monthly prices still visible after toggling");
+  if ((await page.getByRole("button", { name: "Annual", exact: true }).getAttribute("aria-pressed")) !== "true") fail("pricing", "aria-pressed not updated");
+  const plans = await page.locator("[data-plan]").count();
+  if (plans !== 4) fail("pricing", `expected 4 plan cards, found ${plans}`);
+  const headers = await page.locator("table thead th[scope=col]").count();
+  if (headers !== 5) fail("pricing", `comparison table should have 5 column headers, found ${headers}`);
+  const faq = page.locator("details").first();
+  await faq.locator("summary").click();
+  if (!(await faq.evaluate((d) => d.open))) fail("pricing", "FAQ item did not open");
+  const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
+  if (!jsonLd.some((t) => t.includes('"FAQPage"'))) fail("pricing", "FAQPage structured data missing");
+  if (jsonLd.some((t) => /"offers"|"price"/i.test(t))) fail("pricing", "structured data must not contain prices");
+  await page.close();
+
+  // No sign-in / account links anywhere while accounts are disabled.
+  const check = await browser.newPage();
+  for (const route of ["/", "/pricing/", "/contact/"]) {
+    await check.goto(base + route);
+    const accountLinks = await check.locator('a[href*="sign-in"], a[href*="sign-up"], a[href*="/account"], a[href*="signin"]').count();
+    if (accountLinks) fail(route, "account link rendered while accounts are disabled");
+  }
+  await check.close();
+}
+
 await browser.close();
 server.close();
 console.log(`Checked ${routes.length} pages × 2 viewports, ${internalLinks.size} internal links.`);
