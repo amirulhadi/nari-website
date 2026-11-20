@@ -3,7 +3,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Button from "@/components/ui/Button.astro";
 import StatusTag from "@/components/ui/StatusTag.astro";
-import SectionHeader from "@/components/ui/SectionHeader.astro";
 import Logo from "@/components/brand/Logo.astro";
 import Mark from "@/components/brand/Mark.astro";
 
@@ -23,7 +22,11 @@ const type = [
 ---
 <BaseLayout title="Styleguide" noindex>
   <div class="container-site space-y-20 py-16">
-    <SectionHeader eyebrow="Design system" title="NARI Studio styleguide" intro="Tokens live in src/styles/global.css. Typeface: Manrope (variable, self-hosted)." />
+    <div class="max-w-[44rem]">
+      <p class="eyebrow mb-4">Design system</p>
+      <h1 class="text-h2">NARI Studio styleguide</h1>
+      <p class="mt-5 text-lead text-ink-2">Tokens live in src/styles/global.css. Typeface: Manrope (variable, self-hosted).</p>
+    </div>
 
     <section>
       <h2 class="eyebrow mb-6">Brand</h2>

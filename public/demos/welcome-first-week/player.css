@@ -1,0 +1,51 @@
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#020617;color:#e2e8f0;font-family:system-ui,sans-serif}
+#nari-app{display:flex;flex-direction:column;height:100%}
+#nari-chrome{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.6rem .9rem;border-bottom:1px solid #1e293b;background:#0f172a}
+#nari-chrome button{border:0;border-radius:.35rem;padding:.35rem .7rem;background:#1e293b;color:#e2e8f0;cursor:pointer;font-size:.8rem}
+#nari-chrome button:hover{background:#334155}
+#nari-chrome button:disabled{opacity:.35;cursor:default}
+#nari-chrome .primary{background:#0d9488;color:#042f2e;font-weight:600}
+#nari-chrome .primary:hover{background:#14b8a6}
+#nari-meta{font-size:.75rem;color:#94a3b8}
+#nari-review-bar{display:flex;align-items:center;gap:.75rem;margin:.4rem .9rem 0;padding:.45rem .7rem;border-radius:.4rem;border:1px solid rgba(167,139,250,.45);background:#2e1065;color:#ede9fe;font-size:.8rem}
+#nari-review-bar[hidden]{display:none}
+#nari-review-bar button{border:0;border-radius:.35rem;padding:.25rem .6rem;background:rgba(167,139,250,.3);color:#ede9fe;cursor:pointer}
+/* Accessibility: visible keyboard focus and screen-reader-only text */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#nari-app button:focus-visible,#nari-app input:focus-visible,#nari-app [tabindex]:focus-visible{outline:3px solid #5eead4;outline-offset:2px}
+.el[role=button]{cursor:pointer}
+#nari-quiz-msg{display:none;margin:.4rem .9rem 0;padding:.45rem .7rem;border-radius:.4rem;border:1px solid rgba(244,63,94,.4);background:#4c0519;color:#ffe4e6;font-size:.8rem}
+#nari-quiz-msg.show{display:block}
+#nari-quiz-msg.success{border-color:rgba(45,212,191,.45);background:#042f2e;color:#ccfbf1}
+#nari-body{display:grid;grid-template-columns:200px 1fr;min-height:0;flex:1}
+#nari-slides{overflow:auto;border-right:1px solid #1e293b;padding:.5rem;background:#020617}
+#nari-slides button{display:block;width:100%;text-align:left;border:0;background:transparent;color:#94a3b8;padding:.4rem .5rem;border-radius:.35rem;cursor:pointer;font-size:.75rem}
+#nari-slides button.active{background:rgba(45,212,191,.15);color:#ccfbf1}
+#nari-slides button:hover{background:#0f172a;color:#e2e8f0}
+#nari-stage-wrap{overflow:auto;padding:1.25rem;display:flex;align-items:flex-start;justify-content:center}
+#nari-stage{position:relative;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.45)}
+#nari-footer{border-top:1px solid #1e293b;padding:.4rem .9rem;font-size:.7rem;color:#64748b}
+#nari-playbar{display:none;align-items:center;gap:.75rem;padding:.55rem .9rem;border-top:1px solid #1e293b;background:#020617}
+#nari-playbar.show{display:flex}
+#nari-playbar button.ghost{background:#1e293b;color:#e2e8f0;font-weight:500;padding:.25rem;width:1.85rem;height:1.85rem;display:inline-flex;align-items:center;justify-content:center}
+#nari-playbar button.ghost:hover{background:#334155;color:#ccfbf1}
+#nari-play-time,#nari-play-duration{font-size:.7rem;color:#94a3b8;font-variant-numeric:tabular-nums;min-width:2.75rem}
+#nari-play-duration{text-align:right}
+#nari-scrub{flex:1;min-width:0;height:.4rem;cursor:pointer;accent-color:#2dd4bf}
+#nari-done{position:absolute;inset:auto 0 1.5rem 0;display:flex;justify-content:center;pointer-events:none}
+#nari-done > div{pointer-events:auto;background:#0f172acc;border:1px solid #334155;border-radius:.5rem;padding:.75rem 1rem;text-align:center}
+.el{position:absolute;user-select:none}
+.el.clickable{cursor:pointer}
+#nari-preload{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+@keyframes nari-veil-out{from{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}
+.nari-veil{position:absolute;inset:0;z-index:2000;pointer-events:none;animation:nari-veil-out .22s ease-out forwards}
+@media (prefers-reduced-motion:reduce){.nari-veil{display:none}}
+#nari-app:fullscreen,#nari-app:-webkit-full-screen{background:#000}
+#nari-app:fullscreen #nari-chrome,#nari-app:-webkit-full-screen #nari-chrome{display:none}
+#nari-app:fullscreen #nari-slides,#nari-app:-webkit-full-screen #nari-slides{display:none}
+#nari-app:fullscreen #nari-body,#nari-app:-webkit-full-screen #nari-body{grid-template-columns:1fr}
+#nari-app:fullscreen #nari-stage-wrap,#nari-app:-webkit-full-screen #nari-stage-wrap{padding:0;align-items:center;justify-content:center;height:100%;overflow:hidden;background:#000}
+#nari-app:fullscreen #nari-stage,#nari-app:-webkit-full-screen #nari-stage{box-shadow:none}
+#nari-app:fullscreen #nari-footer,#nari-app:-webkit-full-screen #nari-footer{display:none}
+#nari-app:fullscreen #nari-playbar.show,#nari-app:-webkit-full-screen #nari-playbar.show{display:flex}

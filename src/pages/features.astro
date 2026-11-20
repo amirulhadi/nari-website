@@ -1,0 +1,116 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import ProductFrame from "@/components/ui/ProductFrame.astro";
+import StatusTag from "@/components/ui/StatusTag.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
+import { featureGroups, type FeatureStatus } from "@/config/features";
+
+import editorOverview from "@/assets/screenshots/editor-overview.png";
+import templatePicker from "@/assets/screenshots/template-picker.png";
+import editorBranching from "@/assets/screenshots/editor-branching.png";
+import editorResults from "@/assets/screenshots/editor-results.png";
+import manifest from "@/assets/screenshots/manifest.json";
+
+/** Real screenshots for the groups where one genuinely shows the feature. */
+const visuals: Record<string, { src: ImageMetadata; alt: string; caption: string }> = {
+  authoring: {
+    src: editorOverview,
+    alt: "NARI Studio editor with the slide list, the slide canvas, the timeline and the properties panel",
+    caption: "Slide list, canvas, timeline and properties in one window.",
+  },
+  slides: {
+    src: templatePicker,
+    alt: "The Start a new course dialog listing five starter courses",
+    caption: "The five starter courses.",
+  },
+  interactions: {
+    src: editorBranching,
+    alt: "A decision slide with three choice buttons, each leading to its own outcome",
+    caption: "A decision slide from the Branching scenario starter course.",
+  },
+  assessment: {
+    src: editorResults,
+    alt: "Results slide with score, pass mark and Review answers and Try again buttons",
+    caption: "The Results slide: score, review and try again.",
+  },
+};
+import type { ImageMetadata } from "astro";
+
+const counts = (status: FeatureStatus) =>
+  featureGroups.reduce((n, g) => n + g.features.filter((f) => f.status === status).length, 0);
+const upcoming = featureGroups.flatMap((g) =>
+  g.features.filter((f) => f.status !== "available").map((f) => ({ ...f, group: g.title })),
+);
+---
+<BaseLayout
+  title="Features: interactive e-learning authoring"
+  description="Everything in NARI Studio: slide authoring, timeline, media, quizzes, branching, accessibility checks, SCORM and HTML5 publishing, and PowerPoint and Captivate import."
+>
+  <PageHero
+    eyebrow="Features"
+    title="Everything you need to author, assess and publish."
+    intro={`NARI Studio v${manifest.appVersion} today: ${counts("available")} capabilities available, ${counts("in-development")} in development and ${counts("planned")} planned. Every item below carries its status.`}
+  />
+
+  <div class="container-site">
+    <nav aria-label="Feature categories" class="sticky top-16 z-30 -mx-4 overflow-x-auto border-y border-line bg-paper/95 px-4 sm:mx-0 sm:rounded-full sm:border sm:px-3">
+      <ul class="flex min-w-max gap-1 py-2">
+        {featureGroups.map((group) => (
+          <li><a href={`#${group.id}`} class="block rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-2 transition-colors hover:bg-sunken hover:text-ink">{group.title}</a></li>
+        ))}
+        <li><a href="#roadmap" class="block rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-2 transition-colors hover:bg-sunken hover:text-ink">What's next</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container-site divide-y divide-line">
+    {featureGroups.map((group) => {
+      const visual = visuals[group.id];
+      return (
+        <section id={group.id} class="grid gap-10 py-16 lg:grid-cols-12 lg:gap-14 lg:py-24" aria-labelledby={`${group.id}-title`}>
+          <div class="lg:col-span-5">
+            <h2 id={`${group.id}-title`} class="text-h2">{group.title}</h2>
+            <p class="mt-4 text-lead text-ink-2">{group.summary}</p>
+            {visual && (
+              <ProductFrame class="mt-8" src={visual.src} alt={visual.alt} caption={visual.caption} sizes="(min-width: 1024px) 480px, 100vw" />
+            )}
+          </div>
+          <ul class="lg:col-span-7 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line self-start">
+            {group.features.map((feature) => (
+              <li class="bg-surface p-6">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <h3 class="text-h3">{feature.title}</h3>
+                  <StatusTag status={feature.status} />
+                </div>
+                <p class:list={["mt-2", feature.status === "available" ? "text-ink-2" : "text-muted"]}>{feature.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+  </div>
+
+  <section id="roadmap" class="border-t border-line bg-surface py-20 lg:py-28" aria-labelledby="roadmap-title">
+    <div class="container-site">
+      <h2 id="roadmap-title" class="text-h2 max-w-[40rem]">What's next.</h2>
+      <p class="mt-4 max-w-[44rem] text-lead text-ink-2">
+        These are not available today. "In development" means work is under way; "Planned" means it is on the roadmap with no date.
+      </p>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {upcoming.map((item) => (
+          <li class="rounded-[var(--radius-card)] border border-line bg-paper p-5">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-base font-bold">{item.title}</h3>
+              <StatusTag status={item.status} class="shrink-0" />
+            </div>
+            <p class="mt-2 text-sm text-muted">{item.group}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <div class="pt-20 lg:pt-28"><CtaBand /></div>
+</BaseLayout>

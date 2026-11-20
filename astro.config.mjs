@@ -21,5 +21,8 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    // Never inline assets as data: URIs: the production Content-Security-Policy
+    // (public/_headers) only allows fonts and scripts from the site's own origin.
+    build: { assetsInlineLimit: 0 },
   },
 });

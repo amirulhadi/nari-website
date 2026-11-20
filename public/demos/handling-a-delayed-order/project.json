@@ -1,0 +1,781 @@
+{
+  "schemaVersion": 1,
+  "id": "prj_41ebd1a1-ccf3-4e57-bbd9-9aaeeb3e364c",
+  "name": "Handling a delayed order",
+  "createdAt": "2026-11-20T09:09:38.723Z",
+  "updatedAt": "2026-11-20T09:09:38.723Z",
+  "settings": {
+    "stageWidth": 1920,
+    "stageHeight": 1080,
+    "defaultSlideDuration": 10,
+    "allowFullscreen": true,
+    "startInFullscreen": false,
+    "showPlaybar": true,
+    "completionRule": "lastSlide"
+  },
+  "theme": {
+    "id": "theme_default",
+    "name": "Default",
+    "stageBackground": "#0F172A",
+    "accent": "#14B8A6",
+    "textColor": "#F8FAFC",
+    "fontFamily": "Georgia, serif",
+    "buttonBackground": "#14B8A6",
+    "buttonTextColor": "#042F2E"
+  },
+  "variables": [
+    {
+      "id": "var_8f8db207-cfbf-4de7-a601-f9d456ad3fee",
+      "name": "score",
+      "type": "number",
+      "defaultValue": 0
+    }
+  ],
+  "assets": [],
+  "slides": [
+    {
+      "id": "slide_1d2ac5a6-86cf-4ff8-92f2-9b477d008bbc",
+      "name": "Introduction",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_ef0c51aa-2cb2-4be6-9dc1-ed62ce254865",
+          "type": "text",
+          "name": "Title",
+          "x": 160,
+          "y": 200,
+          "width": 1600,
+          "height": 100,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "Handling a delayed order",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 48,
+            "fontWeight": 600,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_f7dc2ab3-2c57-4f72-b28c-0b916c375af2",
+          "type": "text",
+          "name": "Body",
+          "x": 160,
+          "y": 340,
+          "width": 1400,
+          "height": 240,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "A customer is upset about a late delivery. Choose how you respond and see what happens.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 28,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_26d57335-639a-4657-a6e2-699e251259d0",
+          "type": "button",
+          "name": "Start",
+          "x": 1480,
+          "y": 900,
+          "width": 340,
+          "height": 80,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_db38a738-ca15-4f7e-9aa8-a752367b333d",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToNextSlide"
+                }
+              ]
+            }
+          ],
+          "label": "Start",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    },
+    {
+      "id": "slide_65741343-7237-4e41-99cb-3b8601f047e7",
+      "name": "The customer is waiting",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_856aad49-edbd-4d91-9ac8-11a644ff8b61",
+          "type": "text",
+          "name": "Heading",
+          "x": 160,
+          "y": 80,
+          "width": 1600,
+          "height": 90,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "The customer is waiting",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 52,
+            "fontWeight": 700,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_51d63704-b988-48a5-9838-fe790ccd8741",
+          "type": "text",
+          "name": "Situation",
+          "x": 160,
+          "y": 220,
+          "width": 1500,
+          "height": 260,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "A customer writes: \"My order was due yesterday and I have heard nothing. I need it for Friday.\" You can see the parcel is delayed at the depot.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_7dd4ebcd-8c66-479a-a2be-8f5db35cd02b",
+          "type": "button",
+          "name": "Choice A",
+          "x": 160,
+          "y": 640,
+          "width": 520,
+          "height": 110,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_a6139887-a17f-4ea1-b1a5-feca0454c8ec",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_67aee5ae-7a90-4004-b66b-d604c6c6997a"
+                }
+              ]
+            }
+          ],
+          "label": "Apologise and give a clear update",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        },
+        {
+          "id": "el_86b44d8d-95be-41f5-99c6-7c10ed6e2e4c",
+          "type": "button",
+          "name": "Choice B",
+          "x": 740,
+          "y": 640,
+          "width": 520,
+          "height": 110,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 4,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_b85fb400-4e97-4f14-88ef-c17430fbca0e",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_a15e06bc-58fa-46ee-ba19-40f4a94b9082"
+                }
+              ]
+            }
+          ],
+          "label": "Explain that the courier is to blame",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        },
+        {
+          "id": "el_520f8c02-15fd-4789-a25f-9f203b0e26bc",
+          "type": "button",
+          "name": "Choice C",
+          "x": 1320,
+          "y": 640,
+          "width": 520,
+          "height": 110,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 5,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_60edae15-6a20-42be-a920-f58bf2389600",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_4356f89c-fc0d-4861-8138-791d427c3c78"
+                }
+              ]
+            }
+          ],
+          "label": "Promise delivery tomorrow",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    },
+    {
+      "id": "slide_67aee5ae-7a90-4004-b66b-d604c6c6997a",
+      "name": "Outcome: clear update",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_41fbe561-2946-4c5f-ba3e-01fced418098",
+          "type": "text",
+          "name": "Outcome",
+          "x": 160,
+          "y": 120,
+          "width": 1600,
+          "height": 100,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "The customer feels informed",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 56,
+            "fontWeight": 700,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_c7be9714-ca31-4546-86d4-305550798ad2",
+          "type": "text",
+          "name": "Explanation",
+          "x": 160,
+          "y": 280,
+          "width": 1500,
+          "height": 360,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "You apologised, said what you know and what you will check, and promised an update by a set time. The customer replies that they appreciate the honesty.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_c26f9a1b-9f06-4763-97bf-0bcf10b81eb2",
+          "type": "button",
+          "name": "Continue",
+          "x": 1480,
+          "y": 900,
+          "width": 340,
+          "height": 80,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_280d9230-ced3-4b9e-9a3e-77d4729fa2a9",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_38ec628f-ab92-497b-b321-1d06eb1887c9"
+                }
+              ]
+            }
+          ],
+          "label": "Continue",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    },
+    {
+      "id": "slide_a15e06bc-58fa-46ee-ba19-40f4a94b9082",
+      "name": "Outcome: blame",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_76bbccc2-e0a9-4fce-b99b-49e9542ac919",
+          "type": "text",
+          "name": "Outcome",
+          "x": 160,
+          "y": 120,
+          "width": 1600,
+          "height": 100,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "The customer is not reassured",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 56,
+            "fontWeight": 700,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_d8143286-490c-4048-a1c5-267cb297be71",
+          "type": "text",
+          "name": "Explanation",
+          "x": 160,
+          "y": 280,
+          "width": 1500,
+          "height": 360,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "The explanation may be true, but it does not help the customer with Friday. They ask what you are going to do about it.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_775428ef-7a68-49eb-a5d8-69ea4ddd9a91",
+          "type": "button",
+          "name": "Continue",
+          "x": 1480,
+          "y": 900,
+          "width": 340,
+          "height": 80,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_37f127be-1f8f-42ac-880b-86bf5b3ea40a",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_38ec628f-ab92-497b-b321-1d06eb1887c9"
+                }
+              ]
+            }
+          ],
+          "label": "Continue",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    },
+    {
+      "id": "slide_4356f89c-fc0d-4861-8138-791d427c3c78",
+      "name": "Outcome: unsure promise",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_f6fa4fda-253e-4636-a007-b1ba05a35b83",
+          "type": "text",
+          "name": "Outcome",
+          "x": 160,
+          "y": 120,
+          "width": 1600,
+          "height": 100,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "The promise is broken",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 56,
+            "fontWeight": 700,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_354a4bef-52eb-4a84-9b9e-adaf1fc780d0",
+          "type": "text",
+          "name": "Explanation",
+          "x": 160,
+          "y": 280,
+          "width": 1500,
+          "height": 360,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "You could not confirm the new date, and the parcel does not arrive. The customer is now more frustrated. Go back and try a different response.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "left"
+          }
+        },
+        {
+          "id": "el_7fd7f8cf-ce19-4f26-8da0-f6f7ad9efb81",
+          "type": "button",
+          "name": "Try again",
+          "x": 1480,
+          "y": 900,
+          "width": 340,
+          "height": 80,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_120eb0f5-f068-40a2-83ad-a6b5ae11cc1b",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "goToSlide",
+                  "slideId": "slide_65741343-7237-4e41-99cb-3b8601f047e7"
+                }
+              ]
+            }
+          ],
+          "label": "Try again",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    },
+    {
+      "id": "slide_38ec628f-ab92-497b-b321-1d06eb1887c9",
+      "name": "Summary",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "type": "color",
+        "color": "#0F172A"
+      },
+      "duration": 10,
+      "hidden": false,
+      "elements": [
+        {
+          "id": "el_b4fc4222-0e39-43e3-9b4e-0f3e691605d9",
+          "type": "text",
+          "name": "Title",
+          "x": 160,
+          "y": 340,
+          "width": 1600,
+          "height": 140,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 1,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "Thank you",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 80,
+            "fontWeight": 700,
+            "color": "#F8FAFC",
+            "align": "center"
+          }
+        },
+        {
+          "id": "el_b8edcd62-8443-4377-b778-103759879d0e",
+          "type": "text",
+          "name": "Message",
+          "x": 260,
+          "y": 520,
+          "width": 1400,
+          "height": 80,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 2,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [],
+          "text": "In a delay, an apology, honest facts and a next step matter most.",
+          "style": {
+            "fontFamily": "Georgia, serif",
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "#F8FAFC",
+            "align": "center"
+          }
+        },
+        {
+          "id": "el_050b62a6-6fef-4394-b74d-3b27228e7487",
+          "type": "button",
+          "name": "Finish course",
+          "x": 790,
+          "y": 680,
+          "width": 340,
+          "height": 90,
+          "rotation": 0,
+          "opacity": 1,
+          "visible": true,
+          "locked": false,
+          "zIndex": 3,
+          "timeline": {
+            "startTime": 0,
+            "duration": 10
+          },
+          "animations": [],
+          "interactions": [
+            {
+              "id": "ix_5bf29351-6926-4ab3-9f0c-c10589aa4f55",
+              "trigger": {
+                "type": "click"
+              },
+              "actions": [
+                {
+                  "type": "exitCourse"
+                }
+              ]
+            }
+          ],
+          "label": "Finish course",
+          "style": {
+            "backgroundColor": "#14B8A6",
+            "textColor": "#042F2E",
+            "borderRadius": 8,
+            "fontSize": 18
+          }
+        }
+      ],
+      "bookmarks": []
+    }
+  ]
+}

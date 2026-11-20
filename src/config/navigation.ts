@@ -15,9 +15,9 @@ export interface NavItem {
 }
 
 export const mainNav: NavItem[] = [
-  { label: "Features", href: "/features/", ready: false, fallback: "/#features" },
-  { label: "Solutions", href: "/solutions/", ready: false, fallback: "/#audiences" },
-  { label: "Showcase", href: "/showcase/", ready: false, fallback: "/#examples" },
+  { label: "Features", href: "/features/", ready: true },
+  { label: "Solutions", href: "/solutions/", ready: true },
+  { label: "Showcase", href: "/showcase/", ready: true },
   { label: "Pricing", href: "/pricing/", ready: false, fallback: "/#plans" },
 ];
 
@@ -26,9 +26,9 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     title: "Product",
     items: [
       { label: "Overview", href: "/", ready: true },
-      { label: "Features", href: "/features/", ready: false, fallback: "/#features" },
-      { label: "Publishing", href: "/features/#publishing", ready: false, fallback: "/#publishing" },
-      { label: "Showcase", href: "/showcase/", ready: false, fallback: "/#examples" },
+      { label: "Features", href: "/features/", ready: true },
+      { label: "Publishing", href: "/features/#publishing", ready: true },
+      { label: "Showcase", href: "/showcase/", ready: true },
       { label: "Pricing", href: "/pricing/", ready: false, fallback: "/#plans" },
       { label: "Early access", href: "/early-access/", ready: true },
     ],
@@ -36,18 +36,18 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
   {
     title: "Solutions",
     items: [
-      { label: "Corporate training", href: "/solutions/corporate-training/", ready: false },
-      { label: "Employee onboarding", href: "/solutions/employee-onboarding/", ready: false },
-      { label: "Compliance training", href: "/solutions/compliance-training/", ready: false },
-      { label: "Education", href: "/solutions/education/", ready: false },
-      { label: "Freelancers", href: "/solutions/freelancers/", ready: false },
+      { label: "Corporate training", href: "/solutions/corporate-training/", ready: true },
+      { label: "Employee onboarding", href: "/solutions/employee-onboarding/", ready: true },
+      { label: "Compliance training", href: "/solutions/compliance-training/", ready: true },
+      { label: "Education", href: "/solutions/education/", ready: true },
+      { label: "Freelancers", href: "/solutions/freelancers/", ready: true },
     ],
   },
   {
     title: "Company",
     items: [
-      { label: "About", href: "/about/", ready: false },
-      { label: "Contact", href: "/contact/", ready: false },
+      { label: "About", href: "/about/", ready: true },
+      { label: "Contact", href: "/contact/", ready: true },
     ],
   },
 ];

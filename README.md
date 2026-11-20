@@ -6,7 +6,8 @@ The app lives in its own repository (`D:\Projects NARI\NARI`); this site is inde
 
 ## Status
 - Phase 1 (planning) complete: [docs/phase-1-plan.md](docs/phase-1-plan.md), [subscription matrix](docs/subscription-feature-matrix.md), [logo directions](docs/brand/logo-directions.md).
-- Phase 2 (design system + homepage) built, awaiting review: [docs/phase-2-summary.md](docs/phase-2-summary.md).
+- Phase 2 (design system + homepage): [docs/phase-2-summary.md](docs/phase-2-summary.md).
+- Phase 3 (features, solutions, showcase, about, contact) built, awaiting review: [docs/phase-3-summary.md](docs/phase-3-summary.md).
 
 ## Develop
 ```bash
@@ -26,6 +27,8 @@ Everything that may change lives in `src/config/`: `site.ts` (brand, contact pla
 # in the app repo:  npx vite --port 1420
 npm run capture    # writes src/assets/screenshots/*.png + manifest.json
 npm run brand      # regenerates favicons and the Open Graph image
+npm run demos      # rebuilds the Showcase example courses with the app's own exporter
+npm run test:site  # after a build: crawls every page under the production headers
 ```
 Needs Microsoft Edge or Chrome installed (set `CAPTURE_BROWSER=chrome` to switch).
 

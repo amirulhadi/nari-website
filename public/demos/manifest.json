@@ -1,0 +1,27 @@
+{
+  "app": "NARI Studio",
+  "appVersion": "0.9.0",
+  "generatedAt": "2026-11-20T09:09:38.711Z",
+  "demos": [
+    {
+      "slug": "workplace-safety-check",
+      "name": "Workplace safety check",
+      "slides": 8
+    },
+    {
+      "slug": "handling-a-delayed-order",
+      "name": "Handling a delayed order",
+      "slides": 6
+    },
+    {
+      "slug": "welcome-first-week",
+      "name": "Welcome: your first week",
+      "slides": 6
+    },
+    {
+      "slug": "hazard-or-safeguard",
+      "name": "Hazard or safeguard?",
+      "slides": 3
+    }
+  ]
+}

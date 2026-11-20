@@ -13,7 +13,9 @@
     "preview": "astro preview",
     "check": "astro check",
     "capture": "node scripts/capture/capture.mjs",
-    "brand": "node scripts/brand/render.mjs"
+    "brand": "node scripts/brand/render.mjs",
+    "demos": "node scripts/demos/build-demos.mjs",
+    "test:site": "node scripts/test/site-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.6",

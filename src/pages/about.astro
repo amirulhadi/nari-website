@@ -1,0 +1,83 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
+
+const principles = [
+  {
+    title: "Honest output",
+    body: "What you preview is what you publish, and what this website says about the product is what the product does. Features that are not finished are labelled as such.",
+  },
+  {
+    title: "Your files stay yours",
+    body: "Projects are ordinary folders on your computer. NARI Studio works offline and sends no usage data.",
+  },
+  {
+    title: "Accessible by default",
+    body: "Accessibility checks sit next to the editor, and exported courses are built to work with a keyboard and screen readers, so accessibility is part of the normal workflow.",
+  },
+  {
+    title: "Standards first",
+    body: "SCORM and HTML5 packages that your existing LMS can import, so you are not tied to one platform.",
+  },
+];
+---
+<BaseLayout
+  title="About NARI Studio"
+  description="NARI Studio aims to make digital learning content creation more accessible, efficient and professional. Our vision, mission and principles."
+>
+  <PageHero
+    eyebrow="About"
+    title="Making professional e-learning authoring more accessible."
+    intro="NARI Studio is a desktop authoring tool for the people who build digital learning: instructional designers, training teams, educators and independent creators."
+  />
+
+  <section class="border-t border-line py-16 lg:py-24" aria-labelledby="vision-title">
+    <div class="container-site grid gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow mb-4">Vision</p>
+        <h2 id="vision-title" class="text-h2">Interactive learning that anyone with something to teach can build.</h2>
+      </div>
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-h3">Mission</h3>
+          <p class="mt-2 text-lead text-ink-2">
+            Give learning developers one focused workspace to design, assess and publish interactive courses, making digital content creation more accessible, more efficient and more professional.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-h3">Why it exists</h3>
+          <p class="mt-2 text-ink-2">
+            Authoring tools tend to be either heavyweight suites or simple slide converters. NARI Studio sits between them: a real timeline, quizzes, branching and SCORM export in an app that is quick to learn.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface py-16 lg:py-24" aria-labelledby="principles-title">
+    <div class="container-site">
+      <h2 id="principles-title" class="text-h2 max-w-[40rem]">What we hold ourselves to.</h2>
+      <div class="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2">
+        {principles.map((item) => (
+          <div class="bg-surface p-7">
+            <h3 class="text-h3">{item.title}</h3>
+            <p class="mt-2 text-ink-2">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24" aria-labelledby="stage-title">
+    <div class="container-site grid gap-8 lg:grid-cols-12">
+      <h2 id="stage-title" class="text-h2 lg:col-span-5">Where we are.</h2>
+      <div class="space-y-4 text-lead text-ink-2 lg:col-span-7">
+        <p>NARI Studio is in early access. The Windows app is feature-rich and being tested before public release; macOS is planned.</p>
+        <p>We are working on verification in real learning management systems and formal accessibility testing. We'll publish what we learn rather than promise it ahead of time.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
