@@ -1,0 +1,194 @@
+---
+// DRAFT COPY: the owner reviews this page before it is published.
+// Facts come only from the NARI Campus repo README (demo slice) and its status table.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import CtaBand from "@/components/ui/CtaBand.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { campus } from "@/config/site";
+
+const steps = [
+  { n: "1", where: "NARI Studio", title: "Create the course", body: "Build it on your desktop and export a SCORM 1.2 or SCORM 2004 package." },
+  { n: "2", where: "NARI Campus", title: "Publish it", body: "Upload the package. Campus checks it, then publishes it as a course version." },
+  { n: "3", where: "NARI Campus", title: "Learners resume, you see reports", body: "Learners play the course, stop and pick up later. You see each attempt in reports." },
+];
+
+const abilities = [
+  {
+    title: "Open catalogue, anonymous learning",
+    body: "Anyone can learn from a public course with no login. A temporary anonymous session keeps their progress, and they can claim it when they sign up.",
+  },
+  {
+    title: "Upload from NARI Studio",
+    body: "Creators upload a SCORM 1.2 or SCORM 2004 zip exported from NARI Studio. The package is validated in the browser and again on the server, then published.",
+  },
+  {
+    title: "Immutable course versions",
+    body: "Each upload is a new course version that never changes. Every learner attempt is kept, with the version it was taken on.",
+  },
+  {
+    title: "A real SCORM runtime",
+    body: "Campus tracks completion, score, location, suspend and resume, session time, interactions and termination, and returns SCORM error codes.",
+  },
+  {
+    title: "Personal and organisation workspaces",
+    body: "Work alone in a personal workspace, or create an organisation and add members. People who are not members of a workspace get a not-found page.",
+  },
+  {
+    title: "Reports",
+    body: "A reports view shows the attempts made on your courses.",
+  },
+  {
+    title: "Free and Pro limits",
+    body: "The server enforces limits on courses, storage and package size for the Free and Pro plans. Checkout is a demo and no money moves.",
+  },
+];
+
+const roles = [
+  { name: "Admin", body: "Manages members, billing and settings for an organisation." },
+  { name: "Creator", body: "Uploads and manages courses." },
+  { name: "Instructor", body: "Sees learner records and reports." },
+  { name: "Learner", body: "Takes courses." },
+];
+
+// From the "Demo shortcuts" table in the Campus README, in plain words.
+const notYet = [
+  "The database is SQLite (Cloudflare D1) with access checks in code. The production design uses PostgreSQL with row-level security.",
+  "Course files are read whole into memory for each request. The production design streams extraction and checks size and zip bombs on the server.",
+  "The package manifest is read in the browser, and the server re-checks paths, file types and the launch file. The production design parses the manifest on the server.",
+  "Checkout is simulated. The production design uses a payment provider and webhooks.",
+  "Sign-in is built-in email and password with 10,000 PBKDF2 iterations, set by the free-tier CPU limit. The production design uses NARI ID (OpenID Connect) with multi-factor sign-in.",
+  "Campus has not been verified in SCORM Cloud or Moodle. That check comes before any claim of compatibility with other systems.",
+];
+
+const trySteps = [
+  "Open the demo signed out. You see the catalogue.",
+  "Sign up.",
+  "Open a workspace and choose Upload course. Drop in a SCORM zip exported from NARI Studio.",
+  "Open the course in a private window, without signing in, and play it. Close it and reopen it. It resumes.",
+  "Open Reports. The attempt is listed.",
+  "On the Free plan, upload a third course. It is blocked. Open Subscription and upgrade (simulated). The upload now works.",
+  "Create an organisation, add a member and look at the roles.",
+];
+---
+<BaseLayout
+  title="NARI Campus: publish, deliver and track SCORM courses"
+  description="NARI Campus is a learning management system in early demo. Upload SCORM courses from NARI Studio, let learners resume them, and see every attempt in reports."
+  product="campus"
+  breadcrumbs={[{ name: "NARI Campus", path: "/campus/" }]}
+>
+  <section class="pb-12 pt-14 sm:pt-20 lg:pb-16">
+    <div class="container-site">
+      <div class="max-w-[52rem]">
+        <p class="eyebrow mb-4">NARI Campus</p>
+        <h1 class="text-display">Publish, deliver and track your courses.</h1>
+        <p class="mt-6 max-w-[40rem] text-lead text-ink-2">
+          NARI Campus is a learning management system. Upload a SCORM course from NARI Studio, let learners play it in a browser, and see each attempt in reports.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <Button href={campus.demoUrl} size="lg" cta="campus-demo" target="_blank" rel="noopener">Try the demo</Button>
+          <Button href="/early-access/" variant="secondary" size="lg" cta="campus-early-access">Join early access</Button>
+        </div>
+      </div>
+
+      <aside id="status" class="mt-12 max-w-[52rem] rounded-[var(--radius-card)] border border-amber/40 bg-amber-soft p-5 sm:p-6" aria-labelledby="status-title">
+        <h2 id="status-title" class="text-h3 !text-amber">Early demo</h2>
+        <ul class="mt-3 space-y-1.5 text-ink">
+          <li>This is a demo slice, not the production system.</li>
+          <li>Billing is simulated. No money moves.</li>
+          <li>Campus is not yet verified against SCORM Cloud or Moodle.</li>
+        </ul>
+        <p class="mt-3 text-sm text-ink-2">See <a href="#not-yet" class="font-semibold underline underline-offset-4">what is not done yet</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-16 lg:py-20" aria-labelledby="flow-title">
+    <div class="container-site">
+      <SectionHeader id="flow-title" eyebrow="How it works" title="From Studio to your learners in three steps." />
+      <ol class="mt-12 grid items-stretch gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
+        {steps.map((step, index) => (
+          <>
+            <li class="flex flex-col rounded-[var(--radius-card)] border border-line bg-paper p-6" data-reveal>
+              <div class="flex items-center gap-3">
+                <span class="inline-flex size-8 items-center justify-center rounded-full bg-ink text-sm font-bold text-paper" aria-hidden="true">{step.n}</span>
+                <span class="text-sm font-semibold text-accent">{step.where}</span>
+              </div>
+              <h3 class="mt-4 text-h3">{step.title}</h3>
+              <p class="mt-2 text-[0.9875rem] text-ink-2">{step.body}</p>
+            </li>
+            {index < steps.length - 1 && (
+              <li class="flex items-center justify-center text-line-strong" aria-hidden="true" role="presentation">
+                <svg class="rotate-90 md:rotate-0" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </li>
+            )}
+          </>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="what-it-does" class="py-16 lg:py-24" aria-labelledby="does-title">
+    <div class="container-site">
+      <SectionHeader id="does-title" eyebrow="What it does today" title="What the early demo can do." intro="These are the things the live demo shows today." />
+      <div class="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {abilities.map((item) => (
+          <div class="bg-surface p-7" data-reveal>
+            <h3 class="text-h3">{item.title}</h3>
+            <p class="mt-2 text-[0.9875rem] text-ink-2">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="roles" class="border-t border-line bg-surface py-16 lg:py-20" aria-labelledby="roles-title">
+    <div class="container-site">
+      <SectionHeader id="roles-title" eyebrow="Roles" title="Four roles, separate permissions." intro="Permissions are separate for each role in a workspace." />
+      <dl class="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {roles.map((role) => (
+          <div class="bg-paper p-6">
+            <dt class="text-h3">{role.name}</dt>
+            <dd class="mt-2 text-[0.9875rem] text-ink-2">{role.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="not-yet" class="py-16 lg:py-24" aria-labelledby="notyet-title">
+    <div class="container-site grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow mb-4">Not yet</p>
+        <h2 id="notyet-title" class="text-h2">What is not done yet.</h2>
+        <p class="mt-5 text-lead text-ink-2">The demo takes shortcuts that the production system will not. Here is each one.</p>
+      </div>
+      <ul class="space-y-4 text-ink-2 lg:col-span-7">
+        {notYet.map((item) => <li class="border-l-2 border-line-strong pl-4">{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-surface py-16 lg:py-20" aria-labelledby="try-title">
+    <div class="container-site grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow mb-4">Try it</p>
+        <h2 id="try-title" class="text-h2">A five-minute tour.</h2>
+        <div class="mt-8">
+          <Button href={campus.demoUrl} size="lg" cta="campus-demo-tour" target="_blank" rel="noopener">Try the demo</Button>
+          <p class="mt-3 text-sm text-muted">Opens the live demo in a new tab.</p>
+        </div>
+      </div>
+      <ol class="list-decimal space-y-3 pl-5 text-ink-2 lg:col-span-7">
+        {trySteps.map((step) => <li>{step}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <div class="pt-16 lg:pt-24">
+    <CtaBand
+      title="Follow NARI Campus as it grows."
+      body="Join early access to hear when NARI Campus and NARI Studio open to more people."
+    />
+  </div>
+</BaseLayout>
