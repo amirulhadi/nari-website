@@ -384,7 +384,7 @@ A full version of this goes into `docs/licensing-architecture.md` in Phase 4.
 | Dark mode | Supported via tokens (respects system), light is the default identity |
 | Imagery | Only real UI captures and real exported courses; simple line icons (inline SVG, one set) — **no stock photos** |
 
-**Logo:** the current app icon is the default Tauri placeholder. Four directions are in [brand/logo-directions.md](brand/logo-directions.md) (board: `brand/logo-directions.html`); the chosen one is refined in Phase 2.
+**Logo:** the current app icon is the default Tauri placeholder. Four directions are in [brand/logo-directions.md](brand/logo-directions.md); the chosen one is refined in Phase 2.
 
 **Why Manrope (D7):**
 
