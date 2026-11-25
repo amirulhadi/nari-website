@@ -19,7 +19,7 @@ export const site = {
   /** <title> for the homepage (kept under 60 characters with the brand). */
   homeTitle: "Learning software that works as one system",
   description:
-    "NARI makes learning software that works as one system: NARI Studio to author interactive courses on your desktop, and NARI Campus to publish, deliver and track them.",
+    "NARI makes learning software that works as one system: NARI Studio to author interactive courses, NARI Campus to publish, deliver and track them.",
 
   /** Registered company name. Not confirmed; the footer shows the brand instead. */
   legalName: null as string | null,
