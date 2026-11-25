@@ -1,7 +1,8 @@
 ---
 /**
- * NARI Studio mark (direction D): the lowercase "n" arch with the teal learning dot.
- * `tile` draws it on the ink rounded square used for app icons and favicons.
+ * NARI symbol (brand package v0.1.0): the "n" arch with the node.
+ * Default is the bare symbol, ink with teal/mint node via tokens.
+ * `tile` draws the favicon cut (heavier stroke) on the ink rounded square used for app icons.
  */
 interface Props {
   size?: number;
@@ -11,23 +12,17 @@ interface Props {
 }
 const { size = 32, tile = false, class: className, title } = Astro.props;
 ---
-<svg
-  width={size}
-  height={size}
-  viewBox="0 0 64 64"
-  class={className}
-  role={title ? "img" : undefined}
-  aria-label={title}
-  aria-hidden={title ? undefined : "true"}
->
-  {tile && <rect width="64" height="64" rx="14" fill="#0E1420" />}
-  <path
-    d="M19 47V21M19 32a13 13 0 0 1 26 0v15"
-    fill="none"
-    stroke={tile ? "#F1F5F9" : "currentColor"}
-    stroke-width="7"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <circle cx="45" cy="17" r="5" fill={tile ? "#14B8A6" : "var(--nari-accent)"} />
-</svg>
+{tile ? (
+  <svg width={size} height={size} viewBox="0 0 64 64" class={className} role={title ? "img" : undefined} aria-label={title} aria-hidden={title ? undefined : "true"}>
+    <rect width="64" height="64" rx="14" fill="#0E1420" />
+    <g transform="translate(9.32 9.32)">
+      <path d="M4.2 41.16V20.87a16.67 16.67 0 0 1 33.35 0V33.51" fill="none" stroke="#F1F5F9" stroke-width="8.4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="37.55" cy="37.55" r="7.81" fill="#2DD4BF" />
+    </g>
+  </svg>
+) : (
+  <svg width={size} height={size} viewBox="0 0 35.964 35.964" class={className} role={title ? "img" : undefined} aria-label={title} aria-hidden={title ? undefined : "true"}>
+    <path d="M3.33 32.63V16.55a13.22 13.22 0 0 1 26.44 0V26.57" fill="none" stroke="var(--nari-ink)" stroke-width="6.66" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="29.77" cy="29.77" r="6.19" fill="var(--nari-node)" />
+  </svg>
+)}
