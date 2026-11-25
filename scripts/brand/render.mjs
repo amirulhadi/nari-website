@@ -9,7 +9,9 @@ import path from "node:path";
 
 const root = path.resolve(fileURLToPath(new URL("../../", import.meta.url)));
 const pub = (p) => path.join(root, "public", p);
-const mark = await readFile(pub("favicon.svg"), "utf8");
+const mark = await readFile(pub("favicon.svg"), "utf8"); // tile favicon from the brand package
+// Master lockup, dark variant (snow symbol and wordmark, mint node), from the brand package v0.1.0.
+const lockup = (await readFile(path.join(root, "src/assets/brand/nari-logo-dark.svg"), "utf8")).replace(/<title>.*?<\/title>/, "");
 const fontFile = path.join(root, "node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2");
 const fontData = (await readFile(fontFile)).toString("base64");
 const fontFace = `@font-face{font-family:Manrope;src:url(data:font/woff2;base64,${fontData}) format("woff2");font-weight:200 800}`;
@@ -31,19 +33,17 @@ await renderSvg("favicon-32.png", 32);
 await renderSvg("apple-touch-icon.png", 180);
 await renderSvg("brand/nari-mark-512.png", 512);
 
-// Open Graph image 1200×630: wordmark, tagline and a real editor screenshot.
+// Open Graph image 1200×630: master lockup on dark paper, tagline and a real editor screenshot.
 await page.setViewportSize({ width: 1200, height: 630 });
 await page.setContent(`<style>${fontFace}
   html,body{margin:0}
-  .og{width:1200px;height:630px;box-sizing:border-box;background:#F7F6F2;font-family:Manrope;color:#0E1420;position:relative;overflow:hidden;padding:72px 80px}
-  .wm{font-size:44px;font-weight:800;letter-spacing:-0.05em}
-  .wm i{font-style:normal;color:#0F766E}
-  .wm span{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#6B7382;margin-left:12px;vertical-align:middle}
-  h1{font-size:58px;line-height:1.04;letter-spacing:-0.035em;font-weight:700;margin:56px 0 0;max-width:560px}
-  p{font-size:22px;color:#454E5E;margin:22px 0 0;max-width:520px;line-height:1.45}
-  img{position:absolute;left:690px;top:110px;width:760px;border-radius:14px;border:1px solid #1e2738;box-shadow:0 30px 60px -30px rgba(14,20,32,.5)}
+  .og{width:1200px;height:630px;box-sizing:border-box;background:#0B1019;font-family:Manrope;color:#EEF1F5;position:relative;overflow:hidden;padding:72px 80px}
+  .wm svg{display:block;height:64px;width:auto}
+  h1{font-size:58px;line-height:1.04;letter-spacing:-0.035em;font-weight:700;color:#EEF1F5;margin:56px 0 0;max-width:560px}
+  p{font-size:22px;color:#B7C0CC;margin:22px 0 0;max-width:520px;line-height:1.45}
+  img{position:absolute;left:690px;top:110px;width:760px;border-radius:14px;border:1px solid #2F3A4C;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
 </style>
-<div class="og"><div class="wm">nari<i>.</i><span>Studio</span></div>
+<div class="og"><div class="wm">${lockup}</div>
 <h1>Build interactive courses. Publish to your LMS.</h1>
 <p>Desktop e-learning authoring with quizzes, branching and SCORM export.</p>
 <img src="data:image/png;base64,${screenshot}" alt=""></div>`);
