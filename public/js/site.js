@@ -35,6 +35,25 @@
     });
   }
 
+  // Desktop nav menus (<details>): close on outside click, Escape and when another opens.
+  const navMenus = document.querySelectorAll("[data-nav-menu]");
+  if (navMenus.length) {
+    document.addEventListener("click", (event) => {
+      navMenus.forEach((menu) => { if (!menu.contains(event.target)) menu.removeAttribute("open"); });
+    });
+    navMenus.forEach((menu) => {
+      menu.addEventListener("toggle", () => {
+        if (menu.open) navMenus.forEach((other) => { if (other !== menu) other.removeAttribute("open"); });
+      });
+      menu.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && menu.open) {
+          menu.removeAttribute("open");
+          menu.querySelector("summary")?.focus();
+        }
+      });
+    });
+  }
+
   // Billing period toggle: flips data-billing on the page's [data-billing-root].
   const billingRoot = document.querySelector("[data-billing-root]");
   const billingButtons = document.querySelectorAll("[data-billing-set]");

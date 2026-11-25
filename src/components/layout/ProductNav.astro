@@ -1,0 +1,49 @@
+---
+/**
+ * Thin sub-header on product pages: the product lockup plus that product's section links.
+ * Sits under the main header, with the product's primary button on the right.
+ */
+import Logo from "@/components/brand/Logo.astro";
+import Button from "@/components/ui/Button.astro";
+import { productNav } from "@/config/navigation";
+import { campus, getProduct, studioCta, type ProductId } from "@/config/site";
+
+interface Props { product: ProductId }
+const { product } = Astro.props;
+const info = getProduct(product);
+const links = productNav[product];
+const path = Astro.url.pathname.replace(/\/?$/, "/");
+const cta = product === "studio" ? studioCta() : { label: "Try the demo", href: campus.demoUrl, external: true };
+---
+<div class="sticky top-16 z-40 border-b border-line bg-surface" data-subnav>
+  <div class="container-site flex min-h-12 flex-wrap items-center gap-x-6 gap-y-1 py-2">
+    <a href={info.path} class="shrink-0 rounded-md" aria-label={`${info.name} overview`}>
+      <Logo product={product} size="sm" class="!h-6" />
+    </a>
+    <nav aria-label={`${info.name} sections`} class="min-w-0">
+      <ul class="flex flex-wrap items-center gap-x-1">
+        {links.map((link) => {
+          const current = !link.href.includes("#") && (link.href === path || (link.href !== info.path && path.startsWith(link.href)));
+          return (
+            <li>
+              <a
+                href={link.href}
+                aria-current={current ? "page" : undefined}
+                class:list={["rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors hover:text-ink", current ? "text-ink underline decoration-accent decoration-2 underline-offset-[10px]" : "text-ink-2"]}
+              >{link.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+    <div class="ml-auto hidden sm:block">
+      <Button
+        href={cta.href}
+        size="sm"
+        variant="secondary"
+        cta={`${product}-subnav`}
+        {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+      >{cta.label}</Button>
+    </div>
+  </div>
+</div>

@@ -5,8 +5,10 @@ import { mainNav, resolve } from "@/config/navigation";
 import { accountUrl, primaryCta, site } from "@/config/site";
 
 const signIn = accountUrl("signIn"); // null until an account system exists
-const links = resolve(mainNav);
 const cta = primaryCta();
+const groups = mainNav
+  .map((group) => ({ ...group, children: group.children ? resolve(group.children) : undefined }))
+  .filter((group) => group.href || (group.children && group.children.length > 0));
 ---
 <header class="sticky top-0 z-50 border-b border-transparent bg-paper transition-colors" data-header>
   <div class="container-site flex h-16 items-center gap-8">
@@ -16,8 +18,24 @@ const cta = primaryCta();
 
     <nav aria-label="Main" class="hidden md:block">
       <ul class="flex items-center gap-1">
-        {links.map((link) => (
-          <li><a href={link.href} class="rounded-md px-3 py-2 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:text-ink">{link.label}</a></li>
+        {groups.map((group) => (
+          <li class="relative">
+            {group.children ? (
+              <details class="group" data-nav-menu>
+                <summary class="flex cursor-pointer list-none items-center gap-1 rounded-md px-3 py-2 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:text-ink [&::-webkit-details-marker]:hidden">
+                  {group.label}
+                  <svg class="transition-transform group-open:rotate-180" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" /></svg>
+                </summary>
+                <ul class="absolute left-0 top-full z-50 mt-1 min-w-48 rounded-[var(--radius-card)] border border-line bg-surface p-1.5 shadow-[0_12px_32px_-12px_rgba(14,20,32,0.25)]">
+                  {group.children.map((link) => (
+                    <li><a href={link.href} class="block rounded-md px-3 py-2 text-[0.9375rem] font-medium text-ink-2 hover:bg-sunken hover:text-ink">{link.label}</a></li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <a href={group.href} class="rounded-md px-3 py-2 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:text-ink">{group.label}</a>
+            )}
+          </li>
         ))}
       </ul>
     </nav>
@@ -43,11 +61,24 @@ const cta = primaryCta();
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-line bg-paper md:hidden" data-menu>
+  <div id="mobile-menu" class="hidden max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-line bg-paper md:hidden" data-menu>
     <nav aria-label="Mobile" class="container-site py-4">
       <ul class="flex flex-col">
-        {links.map((link) => (
-          <li><a href={link.href} class="block rounded-md py-3 text-lg font-semibold text-ink">{link.label}</a></li>
+        {groups.map((group) => (
+          <li>
+            {group.children ? (
+              <>
+                <p class="pt-3 text-sm font-semibold text-muted">{group.label}</p>
+                <ul>
+                  {group.children.map((link) => (
+                    <li><a href={link.href} class="block rounded-md py-2.5 text-lg font-semibold text-ink">{link.label}</a></li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a href={group.href} class="block rounded-md py-3 text-lg font-semibold text-ink">{group.label}</a>
+            )}
+          </li>
         ))}
       </ul>
       <Button href={cta.href} size="lg" class="mt-4 w-full" cta="mobile-primary">{cta.label}</Button>

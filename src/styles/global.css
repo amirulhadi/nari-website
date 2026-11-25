@@ -61,6 +61,7 @@
   --nari-on-accent: #FFFFFF;
   --nari-amber: #92580A;
   --nari-node: #14B8A6;
+  --nari-node-campus: #D97706;
   --nari-amber-soft: #FBF0DC;
   /* Closing call-to-action band */
   --nari-band-bg: #0e1420;
@@ -88,6 +89,7 @@
     --nari-on-accent: #04201D;
     --nari-amber: #F2B45A;
     --nari-node: #2DD4BF;
+    --nari-node-campus: #F5B544;
     --nari-amber-soft: #2A2111;
     --nari-band-bg: #121925;
     --nari-band-border: #2f3a4c;
@@ -114,6 +116,7 @@
   --nari-on-accent: #04201D;
   --nari-amber: #F2B45A;
   --nari-node: #2DD4BF;
+  --nari-node-campus: #F5B544;
   --nari-amber-soft: #2A2111;
   --nari-band-bg: #121925;
   --nari-band-border: #2f3a4c;
@@ -129,6 +132,9 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     scroll-padding-top: 5rem;
+  }
+  html:has([data-subnav]) {
+    scroll-padding-top: 8rem;
   }
   body {
     background: var(--nari-paper);
