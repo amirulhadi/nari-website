@@ -2,7 +2,7 @@
 @import "@fontsource-variable/manrope";
 
 /*
- * NARI Studio design tokens.
+ * NARI master design tokens (shared brand package v0.1.0, Direction A "Path").
  * Colours are CSS variables so light/dark switch in one place; Tailwind utilities
  * (bg-paper, text-ink, border-line, text-accent …) are generated from @theme.
  */
@@ -47,20 +47,21 @@
 
 :root {
   color-scheme: light;
-  --nari-paper: #f7f6f2;
-  --nari-surface: #ffffff;
-  --nari-sunken: #efede7;
-  --nari-line: #e6e3dc;
-  --nari-line-strong: #d3cfc5;
-  --nari-ink: #0e1420;
-  --nari-ink-2: #454e5e;
-  --nari-muted: #5c6474;
-  --nari-accent: #0f766e;
-  --nari-accent-strong: #0b5e57;
-  --nari-accent-soft: #e3f1ef;
-  --nari-on-accent: #ffffff;
-  --nari-amber: #92580a;
-  --nari-amber-soft: #fbf0dc;
+  --nari-paper: #F7F6F2;
+  --nari-surface: #FFFFFF;
+  --nari-sunken: #EFEDE7;
+  --nari-line: #E6E3DC;
+  --nari-line-strong: #D3CFC5;
+  --nari-ink: #0E1420;
+  --nari-ink-2: #454E5E;
+  --nari-muted: #5C6474;
+  --nari-accent: #0F766E;
+  --nari-accent-strong: #0B5E57;
+  --nari-accent-soft: #E3F1EF;
+  --nari-on-accent: #FFFFFF;
+  --nari-amber: #92580A;
+  --nari-node: #14B8A6;
+  --nari-amber-soft: #FBF0DC;
   /* Closing call-to-action band */
   --nari-band-bg: #0e1420;
   --nari-band-border: #0e1420;
@@ -73,20 +74,21 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --nari-paper: #0b1019;
+    --nari-paper: #0B1019;
     --nari-surface: #121925;
-    --nari-sunken: #0e141f;
-    --nari-line: #222b3a;
-    --nari-line-strong: #2f3a4c;
-    --nari-ink: #eef1f5;
-    --nari-ink-2: #b7c0cc;
-    --nari-muted: #8a94a3;
-    --nari-accent: #2dd4bf;
-    --nari-accent-strong: #5eead4;
-    --nari-accent-soft: #0f2a2a;
-    --nari-on-accent: #04201d;
-    --nari-amber: #f2b45a;
-    --nari-amber-soft: #2a2111;
+    --nari-sunken: #0E141F;
+    --nari-line: #222B3A;
+    --nari-line-strong: #2F3A4C;
+    --nari-ink: #EEF1F5;
+    --nari-ink-2: #B7C0CC;
+    --nari-muted: #8A94A3;
+    --nari-accent: #2DD4BF;
+    --nari-accent-strong: #5EEAD4;
+    --nari-accent-soft: #0F2A2A;
+    --nari-on-accent: #04201D;
+    --nari-amber: #F2B45A;
+    --nari-node: #2DD4BF;
+    --nari-amber-soft: #2A2111;
     --nari-band-bg: #121925;
     --nari-band-border: #2f3a4c;
     --nari-band-fg: #eef1f5;
@@ -98,20 +100,21 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --nari-paper: #0b1019;
+  --nari-paper: #0B1019;
   --nari-surface: #121925;
-  --nari-sunken: #0e141f;
-  --nari-line: #222b3a;
-  --nari-line-strong: #2f3a4c;
-  --nari-ink: #eef1f5;
-  --nari-ink-2: #b7c0cc;
-  --nari-muted: #8a94a3;
-  --nari-accent: #2dd4bf;
-  --nari-accent-strong: #5eead4;
-  --nari-accent-soft: #0f2a2a;
-  --nari-on-accent: #04201d;
-  --nari-amber: #f2b45a;
-  --nari-amber-soft: #2a2111;
+  --nari-sunken: #0E141F;
+  --nari-line: #222B3A;
+  --nari-line-strong: #2F3A4C;
+  --nari-ink: #EEF1F5;
+  --nari-ink-2: #B7C0CC;
+  --nari-muted: #8A94A3;
+  --nari-accent: #2DD4BF;
+  --nari-accent-strong: #5EEAD4;
+  --nari-accent-soft: #0F2A2A;
+  --nari-on-accent: #04201D;
+  --nari-amber: #F2B45A;
+  --nari-node: #2DD4BF;
+  --nari-amber-soft: #2A2111;
   --nari-band-bg: #121925;
   --nari-band-border: #2f3a4c;
   --nari-band-fg: #eef1f5;
