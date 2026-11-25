@@ -22,7 +22,10 @@ npm run preview
 Node 22.23+ is required (`.node-version` pins 24 for CI and Cloudflare).
 
 ## Configuration
-Everything that may change lives in `src/config/`: `site.ts` (brand, contact placeholders, feature flags, primary CTA mode), `features.ts`, `pricing.ts`, `navigation.ts`. Unconfirmed details are `null` and the UI hides them. Copy `.env.example` to `.env` to set `PUBLIC_SITE_URL`.
+Everything that may change lives in `src/config/`: `site.ts` (master brand, products list, Studio download switch, Campus demo URL, contact placeholders, feature flags, site-wide CTA mode), `features.ts`, `pricing.ts`, `navigation.ts`. Unconfirmed details are `null` and the UI hides them. Copy `.env.example` to `.env` to set `PUBLIC_SITE_URL`.
+
+### Studio download switch
+`studioDownload.url` in `src/config/site.ts` is `null` until the first installer is published on GitHub Releases (repo `amirulhadi/nari-studio`). While it is `null`, the Studio button says "Join the beta" and links to `/early-access/`. Set the URL to the release page or installer and the same button says "Download for Windows (beta)" and links there. Nothing else changes. Do not set it before the installer exists.
 
 ## Real screenshots
 ```bash

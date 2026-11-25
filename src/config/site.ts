@@ -13,18 +13,18 @@ export interface ContactChannel {
 }
 
 export const site = {
-  brand: "NARI Studio",
-  shortBrand: "nari",
-  tagline: "Interactive e-learning, authored on your desktop.",
+  /** Master brand. Products are named "NARI ___" and listed in `products` below. */
+  brand: "NARI",
+  tagline: "Learning software that works as one system.",
   /** <title> for the homepage (kept under 60 characters with the brand). */
-  homeTitle: "Desktop e-learning authoring software",
+  homeTitle: "Learning software that works as one system",
   description:
-    "NARI Studio is a desktop authoring tool for building interactive e-learning courses with quizzes, branching and video, then publishing them as SCORM or HTML5 for any learning management system.",
+    "NARI makes learning software that works as one system: NARI Studio to author interactive courses on your desktop, and NARI Campus to publish, deliver and track them.",
 
   /** Registered company name. Not confirmed; the footer shows the brand instead. */
   legalName: null as string | null,
 
-  /** Current app release the website describes (from the screenshot manifest). */
+  /** Current stage the website describes. */
   productStage: "Early access",
   platforms: { windows: "available-in-early-access", macos: "planned" } as const,
 
@@ -90,3 +90,76 @@ export function primaryCta() {
 export function copyrightHolder() {
   return site.legalName ?? site.brand;
 }
+
+/**
+ * The products NARI offers today. Add an entry only when a real product exists;
+ * the site has no placeholder slot for future products.
+ */
+export type ProductId = "studio" | "campus";
+
+export interface Product {
+  id: ProductId;
+  /** Full name, always "NARI ___". */
+  name: string;
+  /** Short form, allowed after the full name has been used on the page. */
+  short: string;
+  /** What kind of product it is, in plain words. */
+  descriptor: string;
+  /** One line: what it does today. */
+  description: string;
+  /** Honest stage label. */
+  status: string;
+  /** Root-relative product page. */
+  path: string;
+}
+
+export const products: Product[] = [
+  {
+    id: "studio",
+    name: "NARI Studio",
+    short: "Studio",
+    descriptor: "Desktop authoring",
+    description: "Build interactive courses with quizzes, branching and video, then export SCORM or HTML5.",
+    status: "Beta for Windows",
+    path: "/studio/",
+  },
+  {
+    id: "campus",
+    name: "NARI Campus",
+    short: "Campus",
+    descriptor: "Learning management",
+    description: "Publish SCORM courses, let people learn from them and see who finished.",
+    status: "Early demo",
+    path: "/campus/",
+  },
+];
+
+export function getProduct(id: ProductId): Product {
+  return products.find((p) => p.id === id)!;
+}
+
+/**
+ * NARI Studio download switch.
+ *
+ * `url` is null until the first installer is published on GitHub Releases
+ * (repo amirulhadi/nari-studio). While it is null, the Studio button reads
+ * "Join the beta" and links to /early-access/. Set `url` to the release page or
+ * installer URL and the same button reads "Download for Windows (beta)" and links
+ * there. Nothing else needs to change. Do not set it before the installer exists.
+ */
+export const studioDownload: { url: string | null } = { url: null };
+
+/** Primary button for NARI Studio, driven by `studioDownload.url`. */
+export function studioCta(): { label: string; href: string; external: boolean } {
+  return studioDownload.url
+    ? { label: "Download for Windows (beta)", href: studioDownload.url, external: true }
+    : { label: "Join the beta", href: "/early-access/", external: false };
+}
+
+/**
+ * NARI Campus early demo: the live demo deployment on Cloudflare Workers.
+ * Change `demoUrl` here if the demo moves.
+ */
+export const campus = {
+  demoUrl: "https://nari-lms-app.nari-digital.workers.dev",
+} as const;
