@@ -61,8 +61,12 @@
   --nari-on-accent: #FFFFFF;
   --nari-amber: #92580A;
   --nari-node: #14B8A6;
-  --nari-node-campus: #D97706;
+  --nari-campus-node: #D97706;
   --nari-amber-soft: #FBF0DC;
+  --nari-danger: #B42318;
+  --nari-danger-soft: #FDE8E6;
+  --nari-success: #166534;
+  --nari-success-soft: #E2F4E8;
   /* Closing call-to-action band */
   --nari-band-bg: #0e1420;
   --nari-band-border: #0e1420;
@@ -89,8 +93,12 @@
     --nari-on-accent: #04201D;
     --nari-amber: #F2B45A;
     --nari-node: #2DD4BF;
-    --nari-node-campus: #F5B544;
+    --nari-campus-node: #F5B544;
     --nari-amber-soft: #2A2111;
+    --nari-danger: #FF8A80;
+    --nari-danger-soft: #3A1714;
+    --nari-success: #4ADE80;
+    --nari-success-soft: #10281A;
     --nari-band-bg: #121925;
     --nari-band-border: #2f3a4c;
     --nari-band-fg: #eef1f5;
@@ -116,8 +124,12 @@
   --nari-on-accent: #04201D;
   --nari-amber: #F2B45A;
   --nari-node: #2DD4BF;
-  --nari-node-campus: #F5B544;
+  --nari-campus-node: #F5B544;
   --nari-amber-soft: #2A2111;
+  --nari-danger: #FF8A80;
+  --nari-danger-soft: #3A1714;
+  --nari-success: #4ADE80;
+  --nari-success-soft: #10281A;
   --nari-band-bg: #121925;
   --nari-band-border: #2f3a4c;
   --nari-band-fg: #eef1f5;

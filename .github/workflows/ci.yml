@@ -15,5 +15,6 @@ jobs:
           node-version-file: .node-version
           cache: npm
       - run: npm ci
+      - run: npm run brand:check
       - run: npm run check
       - run: npm run build

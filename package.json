@@ -18,7 +18,8 @@
     "test:site": "node scripts/test/site-check.mjs",
     "test:a11y": "node scripts/test/a11y-check.mjs",
     "test:keyboard": "node scripts/test/keyboard-check.mjs",
-    "test:seo": "node scripts/test/seo-check.mjs"
+    "test:seo": "node scripts/test/seo-check.mjs",
+    "brand:check": "node scripts/brand-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.6",

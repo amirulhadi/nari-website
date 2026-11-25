@@ -1,0 +1,50 @@
+{
+  "package": "@nari/brand",
+  "version": "0.1.0",
+  "tokens": {
+    "light": {
+      "paper": "#F7F6F2",
+      "surface": "#FFFFFF",
+      "sunken": "#EFEDE7",
+      "line": "#E6E3DC",
+      "line-strong": "#D3CFC5",
+      "ink": "#0E1420",
+      "ink-2": "#454E5E",
+      "muted": "#5C6474",
+      "accent": "#0F766E",
+      "accent-strong": "#0B5E57",
+      "accent-soft": "#E3F1EF",
+      "on-accent": "#FFFFFF",
+      "amber": "#92580A",
+      "amber-soft": "#FBF0DC",
+      "danger": "#B42318",
+      "danger-soft": "#FDE8E6",
+      "success": "#166534",
+      "success-soft": "#E2F4E8",
+      "node": "#14B8A6",
+      "campus-node": "#D97706"
+    },
+    "dark": {
+      "paper": "#0B1019",
+      "surface": "#121925",
+      "sunken": "#0E141F",
+      "line": "#222B3A",
+      "line-strong": "#2F3A4C",
+      "ink": "#EEF1F5",
+      "ink-2": "#B7C0CC",
+      "muted": "#8A94A3",
+      "accent": "#2DD4BF",
+      "accent-strong": "#5EEAD4",
+      "accent-soft": "#0F2A2A",
+      "on-accent": "#04201D",
+      "amber": "#F2B45A",
+      "amber-soft": "#2A2111",
+      "danger": "#FF8A80",
+      "danger-soft": "#3A1714",
+      "success": "#4ADE80",
+      "success-soft": "#10281A",
+      "node": "#2DD4BF",
+      "campus-node": "#F5B544"
+    }
+  }
+}
