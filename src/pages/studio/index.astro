@@ -8,6 +8,7 @@ import ProductFrame from "@/components/ui/ProductFrame.astro";
 import { featureGroups } from "@/config/features";
 import { plans } from "@/config/pricing";
 import PlanCard from "@/components/pricing/PlanCard.astro";
+import { beta } from "@/config/beta";
 import { studioCta } from "@/config/site";
 
 import editorQuestion from "@/assets/screenshots/editor-question.png";
@@ -164,6 +165,30 @@ const softwareJsonLd = {
         caption={`NARI Studio v${appVersion}, editing a pooled question in the Knowledge quiz starter course. Real screenshot.`}
         priority
       />
+    </div>
+  </section>
+
+  <!-- Studio Beta Edition -->
+  <section id="beta" class="border-t border-line bg-surface py-16 lg:py-20" aria-labelledby="beta-title">
+    <div class="container-site grid items-start gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow mb-4">Studio Beta Edition</p>
+        <h2 id="beta-title" class="text-h2">Test the beta on real courses.</h2>
+        <p class="mt-5 text-lead text-ink-2">
+          The Beta Edition is version {beta.version} of NARI Studio, shared with a small group of testers. Almost every feature is switched on.
+        </p>
+      </div>
+      <div class="lg:col-span-7">
+        <ul class="space-y-3 text-ink-2">
+          <li class="border-l-2 border-accent pl-4"><strong class="font-semibold text-ink">Windows only.</strong> {beta.platform}. macOS is planned.</li>
+          <li class="border-l-2 border-accent pl-4"><strong class="font-semibold text-ink">{beta.exportLimit} exports per installation.</strong> Only exports that finish count. Preview is unlimited.</li>
+          <li class="border-l-2 border-accent pl-4"><strong class="font-semibold text-ink">Not code-signed yet.</strong> Windows SmartScreen asks you to confirm the installer.</li>
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href="/studio/beta/#known-issues" variant="secondary" cta="studio-beta-known-issues">Known issues</Button>
+          <Button href="/studio/beta/#tester-guide" variant="secondary" cta="studio-beta-guide">Tester guide</Button>
+        </div>
+      </div>
     </div>
   </section>
 

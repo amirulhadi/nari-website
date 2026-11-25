@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import Button from "@/components/ui/Button.astro";
+import { beta, betaDiffs, knownIssues, testerSteps } from "@/config/beta";
+import { studioCta } from "@/config/site";
+
+const cta = studioCta();
+const guide = [
+  { id: "install", title: "1. Install", items: testerSteps.install, note: `Requirements: ${beta.platform}. An internet connection is needed only if the installer has to download Microsoft WebView2.` },
+  { id: "know", title: "2. Things to know", items: testerSteps.know },
+  { id: "tasks", title: "3. Core tasks", items: testerSteps.tasks, note: "Try each one and note anything confusing, slow or broken. The core tasks take about an hour." },
+  { id: "feedback", title: "4. Send feedback", items: testerSteps.feedback },
+  { id: "trouble", title: "5. If something goes wrong", items: testerSteps.trouble },
+];
+---
+<BaseLayout
+  title="Studio Beta Edition: known issues and tester guide"
+  description="What the NARI Studio Beta Edition is, its known issues, and a short tester guide: install, core tasks, feedback and what to do when something goes wrong."
+  product="studio"
+  breadcrumbs={[{ name: "NARI Studio", path: "/studio/" }, { name: "Beta Edition", path: "/studio/beta/" }]}
+>
+  <PageHero
+    eyebrow="NARI Studio Beta Edition"
+    title="Test NARI Studio on real courses."
+    intro={`The Beta Edition is version ${beta.version} for ${beta.platform}. Almost everything in NARI Studio is switched on. Use it on real work and tell us what works and what does not.`}
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href={cta.href} size="lg" cta="beta-primary" {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}>{cta.label}</Button>
+      <Button href="#known-issues" variant="secondary" size="lg" cta="beta-known-issues">Known issues</Button>
+      <Button href="#tester-guide" variant="secondary" size="lg" cta="beta-tester-guide">Tester guide</Button>
+    </div>
+  </PageHero>
+
+  <section class="border-t border-line py-16 lg:py-20" aria-labelledby="diff-title">
+    <div class="container-site">
+      <h2 id="diff-title" class="text-h2 max-w-[40rem]">What is different in the beta.</h2>
+      <div class="mt-10 grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2">
+        {betaDiffs.map((item) => (
+          <div class="bg-surface p-7">
+            <h3 class="text-h3">{item.title}</h3>
+            <p class="mt-2 text-ink-2">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="known-issues" class="border-t border-line bg-surface py-16 lg:py-20" aria-labelledby="issues-title">
+    <div class="container-site">
+      <h2 id="issues-title" class="text-h2 max-w-[40rem]">Known issues.</h2>
+      <p class="mt-4 max-w-[44rem] text-lead text-ink-2">These are the problems we know about in version {beta.version}.</p>
+      <div class="mt-10 overflow-x-auto rounded-[var(--radius-card)] border border-line">
+        <table class="w-full min-w-[40rem] border-collapse text-left text-[0.9375rem]">
+          <caption class="sr-only">Known issues in NARI Studio {beta.version} Beta Edition</caption>
+          <thead class="bg-sunken text-sm">
+            <tr>
+              <th scope="col" class="px-4 py-3 font-semibold">Area</th>
+              <th scope="col" class="px-4 py-3 font-semibold">Issue</th>
+              <th scope="col" class="px-4 py-3 font-semibold">What to do</th>
+            </tr>
+          </thead>
+          <tbody>
+            {knownIssues.map((row) => (
+              <tr class="border-t border-line align-top">
+                <th scope="row" class="whitespace-nowrap px-4 py-3 font-semibold">{row.area}</th>
+                <td class="px-4 py-3 text-ink-2">{row.issue}</td>
+                <td class="px-4 py-3 text-ink-2">{row.action}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="tester-guide" class="py-16 lg:py-24" aria-labelledby="guide-title">
+    <div class="container-site">
+      <h2 id="guide-title" class="text-h2 max-w-[40rem]">Tester guide.</h2>
+      <p class="mt-4 max-w-[44rem] text-lead text-ink-2">A short guide for the first hour with NARI Studio.</p>
+      <div class="mt-12 grid gap-10 lg:grid-cols-2">
+        {guide.map((block) => (
+          <div id={block.id}>
+            <h3 class="text-h3">{block.title}</h3>
+            <ol class="mt-4 list-decimal space-y-2 pl-5 text-ink-2">
+              {block.items.map((item) => <li>{item}</li>)}
+            </ol>
+            {block.note && <p class="mt-4 text-sm text-muted">{block.note}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
