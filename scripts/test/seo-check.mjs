@@ -1,7 +1,7 @@
 // SEO audit of the built site (run `npm run build` first). Reads dist/ directly.
 //   - one unique <title> (10–60 chars) and meta description (70–160 chars) per page
 //   - exactly one <h1>, canonical URL, Open Graph tags, theme colours, lang attribute
-//   - indexable pages are in the sitemap; noindex pages (404, styleguide) are not
+//   - indexable pages are in the sitemap (new and moved pages included, old redirected paths excluded); noindex pages are not
 //   - robots.txt references the sitemap and hides non-pages; structured data is valid JSON
 //   - structured data never claims prices, ratings or reviews
 // Usage: npm run test:seo
@@ -68,7 +68,21 @@ for (const route of pages) {
 // Per-page structured data expectations.
 const read = (f) => readFile(f, "utf8");
 const home = await read("dist/index.html");
-if (!home.includes('"SoftwareApplication"')) fail("/", "missing SoftwareApplication data");
+if (home.includes('"SoftwareApplication"')) fail("/", "the NARI home should not describe one product as the SoftwareApplication");
+for (const [route, name] of [["studio", "NARI Studio"], ["campus", "NARI Campus"]]) {
+  const html = await read(`dist/${route}/index.html`);
+  if (!html.includes('"SoftwareApplication"') || !html.includes(`"name":"${name}"`)) fail(`/${route}/`, `missing SoftwareApplication data for ${name}`);
+  if (!html.includes('"BreadcrumbList"')) fail(`/${route}/`, "missing BreadcrumbList data");
+}
+
+// New and moved pages are in the sitemap; redirected (old) paths are not.
+const sitemapPaths = [...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map((m) => m[1]);
+for (const route of ["/", "/studio/", "/studio/features/", "/studio/solutions/", "/studio/showcase/", "/studio/beta/", "/campus/", "/pricing/", "/about/", "/contact/", "/early-access/"]) {
+  if (!sitemapPaths.includes(route)) fail(route, "missing from the sitemap");
+}
+for (const path of sitemapPaths) {
+  if (/^\/(features|solutions|showcase)(\/|$)/.test(path)) fail(path, "redirected path is in the sitemap");
+}
 if (!(await read("dist/pricing/index.html")).includes('"FAQPage"')) fail("/pricing/", "missing FAQPage data");
 
 console.log(`SEO checks on ${pages.length} pages; ${titles.size} unique titles.`);

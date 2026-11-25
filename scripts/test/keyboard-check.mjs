@@ -33,7 +33,7 @@ const active = (page) =>
 // ---- Desktop: skip link, focus order and visible focus on a content-rich page ----
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  for (const route of ["/", "/pricing/", "/features/", "/early-access/"]) {
+  for (const route of ["/", "/studio/", "/campus/", "/pricing/", "/studio/features/", "/early-access/"]) {
     await page.goto(server.base + route);
     await page.keyboard.press("Tab");
     const first = await active(page);
@@ -55,6 +55,25 @@ const active = (page) =>
       if (el.tag === "body") break;
     }
     if (stops < 5) fail(route, `suspiciously few tab stops (${stops})`);
+  }
+
+  // Products menu from the keyboard: Enter opens it, Escape closes it and keeps focus on the button.
+  await page.goto(server.base + "/");
+  const menu = page.locator("[data-nav-menu]").first();
+  await menu.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  if (!(await menu.evaluate((d) => d.open))) fail("products menu", "did not open with Enter");
+  await page.keyboard.press("Tab");
+  if (!(await page.evaluate(() => !!document.activeElement?.closest("[data-nav-menu] ul")))) fail("products menu", "Tab did not move into the open menu");
+  await page.keyboard.press("Escape");
+  if (await menu.evaluate((d) => d.open)) fail("products menu", "Escape did not close the menu");
+  if ((await page.evaluate(() => document.activeElement?.tagName.toLowerCase())) !== "summary") fail("products menu", "focus did not return to the menu button after Escape");
+
+  // Product sub-header: on product pages, not on the NARI home or pricing.
+  for (const [route, expected] of [["/studio/", 1], ["/campus/", 1], ["/studio/beta/", 1], ["/", 0], ["/pricing/", 0]]) {
+    await page.goto(server.base + route);
+    const n = await page.locator("[data-subnav]").count();
+    if (n !== expected) fail(route, `expected ${expected} product sub-header, found ${n}`);
   }
 
   // Billing toggle from the keyboard.

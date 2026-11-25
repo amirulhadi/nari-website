@@ -7,6 +7,15 @@ import CtaBand from "@/components/ui/CtaBand.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import { campus } from "@/config/site";
 
+const softwareJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "NARI Campus",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  description: "NARI Campus is a learning management system in early demo. It publishes SCORM 1.2 and 2004 courses, runs them in the browser and keeps every attempt.",
+};
+
 const steps = [
   { n: "1", where: "NARI Studio", title: "Create the course", body: "Build it on your desktop and export a SCORM 1.2 or SCORM 2004 package." },
   { n: "2", where: "NARI Campus", title: "Publish it", body: "Upload the package. Campus checks it, then publishes it as a course version." },
@@ -75,6 +84,7 @@ const trySteps = [
   title="NARI Campus: publish, deliver and track SCORM courses"
   description="NARI Campus is a learning management system in early demo. Upload SCORM courses from NARI Studio, let learners resume them, and see every attempt in reports."
   product="campus"
+  structuredData={[softwareJsonLd]}
   breadcrumbs={[{ name: "NARI Campus", path: "/campus/" }]}
 >
   <section class="pb-12 pt-14 sm:pt-20 lg:pb-16">

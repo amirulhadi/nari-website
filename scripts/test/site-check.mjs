@@ -5,57 +5,18 @@
 //     horizontal overflow, missing <h1>/title/description/canonical, images without alt
 // Usage: npm run test:site     (needs Microsoft Edge or Chrome; CAPTURE_BROWSER=chrome to switch)
 
-import http from "node:http";
 import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
-import { chromium } from "playwright-core";
+import { DIST, launch, routes as builtRoutes, startServer } from "./lib.mjs";
 
-const DIST = path.resolve("dist");
-const PORT = 4410;
-const base = `http://localhost:${PORT}`;
-const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png", ".svg": "image/svg+xml", ".avif": "image/avif", ".webp": "image/webp", ".woff2": "font/woff2", ".txt": "text/plain", ".xml": "application/xml" };
-
-// Parse public/_headers: only the "/*" block applies to every response.
-const headerText = (await readFile("public/_headers", "utf8")).replace(/\r\n/g, "\n");
-const globalBlock = headerText.split(/\n\n/).find((b) => b.split("\n").includes("/*")) ?? "";
-const globalHeaders = Object.fromEntries(
-  globalBlock.split("\n").slice(globalBlock.split("\n").indexOf("/*") + 1).map((l) => l.trim()).filter(Boolean).map((l) => [l.slice(0, l.indexOf(":")), l.slice(l.indexOf(":") + 1).trim()]),
-);
-delete globalHeaders["Strict-Transport-Security"]; // http://localhost
-globalHeaders["Content-Security-Policy"] = globalHeaders["Content-Security-Policy"].replace("; upgrade-insecure-requests", "");
-
-const server = http.createServer(async (req, res) => {
-  let p = decodeURIComponent(req.url.split("?")[0]);
-  let file = path.join(DIST, p);
-  try {
-    if ((await stat(file)).isDirectory()) file = path.join(file, "index.html");
-    const body = await readFile(file);
-    res.writeHead(200, { "content-type": types[path.extname(file)] ?? "application/octet-stream", ...globalHeaders });
-    res.end(body);
-  } catch {
-    const notFound = await readFile(path.join(DIST, "404.html")).catch(() => Buffer.from("Not found"));
-    res.writeHead(404, { "content-type": "text/html", ...globalHeaders });
-    res.end(notFound);
-  }
-}).listen(PORT);
-
-async function pagesIn(dir, prefix = "") {
-  const out = [];
-  for (const entry of await readdir(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) {
-      if (["_astro", "demos", "js", "og", "brand"].includes(entry.name) && !prefix) continue;
-      out.push(...(await pagesIn(path.join(dir, entry.name), `${prefix}/${entry.name}`)));
-    } else if (entry.name === "index.html") out.push(prefix || "/");
-  }
-  return out;
-}
-
-const routes = (await pagesIn(DIST)).map((r) => (r === "/" ? "/" : `${r}/`)).sort();
+const server = await startServer(4410);
+const base = server.base;
+const routes = await builtRoutes();
 const failures = [];
 const fail = (page, msg) => failures.push(`${page}: ${msg}`);
 const internalLinks = new Map();
 
-const browser = await chromium.launch({ channel: process.env.CAPTURE_BROWSER ?? "msedge" });
+const browser = await launch();
 for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 }, false], ["phone", { width: 390, height: 844 }, true]]) {
   const page = await browser.newPage({ viewport, isMobile: mobile });
   const problems = [];
@@ -76,6 +37,7 @@ for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 
       overflow: document.documentElement.scrollWidth > innerWidth + 1,
       noAlt: [...document.images].filter((i) => !i.hasAttribute("alt")).length,
       links: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")).filter((h) => h.startsWith("/") && !h.startsWith("//")),
+      deadAnchors: [...document.querySelectorAll('a[href^="#"]')].map((a) => a.getAttribute("href")).filter((h) => h.length > 1 && !document.getElementById(h.slice(1))),
     }));
     if (info.h1 !== 1) fail(where, `${info.h1} <h1> elements`);
     if (!info.title) fail(where, "missing title");
@@ -84,6 +46,7 @@ for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 
     if (info.overflow) fail(where, "horizontal overflow");
     if (info.noAlt) fail(where, `${info.noAlt} images without alt`);
     for (const href of info.links) internalLinks.set(href, route);
+    for (const href of info.deadAnchors) fail(where, `broken same-page anchor ${href}`);
   }
   await page.close();
 }
@@ -94,6 +57,11 @@ for (const [href, from] of internalLinks) {
   const target = clean.endsWith("/") ? clean : clean;
   const ok = routes.includes(target) || routes.includes(target + "/") || (await stat(path.join(DIST, clean)).then(() => true, () => false));
   if (!ok) fail(from, `broken link ${href}`);
+  const fragment = href.split("#")[1];
+  if (ok && fragment && routes.includes(clean)) {
+    const html = await readFile(path.join(DIST, clean, "index.html"), "utf8");
+    if (!html.includes(`id="${fragment}"`)) fail(from, `link ${href} points to a missing #${fragment}`);
+  }
 }
 
 // Demo embedded in its iframe under the production CSP: play one slide.
@@ -101,7 +69,7 @@ for (const [href, from] of internalLinks) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const problems = [];
   page.on("console", (m) => { if (m.type() === "error") problems.push(m.text()); });
-  await page.goto(`${base}/showcase/handling-a-delayed-order/`);
+  await page.goto(`${base}/studio/showcase/handling-a-delayed-order/`);
   const frame = page.frameLocator("iframe");
   await frame.getByRole("button", { name: /^Start$/ }).click({ timeout: 8000 }).catch((e) => fail("demo", `could not start: ${e.message.split("\n")[0]}`));
   await frame.getByRole("button", { name: /Apologise/ }).click({ timeout: 8000 }).catch((e) => fail("demo", `choice not clickable: ${e.message.split("\n")[0]}`));
@@ -144,8 +112,89 @@ for (const [href, from] of internalLinks) {
   await check.close();
 }
 
+// Old URLs redirect. Cloudflare Pages reads public/_redirects (301); Astro's meta-refresh stubs are the fallback.
+{
+  const rules = (await readFile("public/_redirects", "utf8"))
+    .split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
+    .map((l) => { const [from, to, status] = l.split(/\s+/); return { from, to, status }; });
+  const apply = (url) => {
+    for (const r of rules) {
+      if (r.from.endsWith("/*")) {
+        const prefix = r.from.slice(0, -1);
+        if (url.startsWith(prefix) && url.length > prefix.length) return { to: r.to.replace(":splat", url.slice(prefix.length)), status: r.status };
+      } else if (r.from === url) return { to: r.to, status: r.status };
+    }
+    return null;
+  };
+  const slugs = async (dir) => (await readdir(path.join(DIST, dir), { withFileTypes: true })).filter((e) => e.isDirectory()).map((e) => e.name);
+  const oldPaths = ["/features/", "/solutions/", "/showcase/"];
+  for (const slug of await slugs("studio/solutions")) oldPaths.push(`/solutions/${slug}/`);
+  for (const slug of await slugs("studio/showcase")) oldPaths.push(`/showcase/${slug}/`);
+  if (oldPaths.length < 12) fail("redirects", `expected at least 12 old URLs, found ${oldPaths.length}`);
+
+  const page = await browser.newPage();
+  for (const old of oldPaths) {
+    const expected = "/studio" + old;
+    if (!routes.includes(expected)) fail(old, `redirect target ${expected} is not a built page`);
+    for (const variant of [old, old.slice(0, -1)]) {
+      const hit = apply(variant);
+      // A splat rule leaves no trailing slash on the last segment; Cloudflare Pages adds it with one more hop.
+      const lands = hit && (hit.to === expected || hit.to === expected.slice(0, -1));
+      if (!lands || hit.status !== "301") fail(variant, `_redirects does not send it to ${expected} with 301 (got ${JSON.stringify(hit)})`);
+    }
+    const stub = await readFile(path.join(DIST, old, "index.html"), "utf8").catch(() => "");
+    if (!stub.includes(`url=${expected}`)) fail(old, "missing meta-refresh fallback to " + expected);
+    await page.goto(base + old);
+    await page.waitForURL(base + expected, { timeout: 5000 }).catch(() => fail(old, `did not end up at ${expected} (at ${page.url()})`));
+  }
+  await page.close();
+}
+
+// Beta Edition pages never mention Captivate (the import is switched off in the beta).
+{
+  for (const route of routes.filter((r) => r.startsWith("/studio/beta/"))) {
+    const html = await readFile(path.join(DIST, route, "index.html"), "utf8");
+    if (/captivate/i.test(html)) fail(route, "mentions Captivate");
+  }
+  const studio = await readFile(path.join(DIST, "studio", "index.html"), "utf8");
+  const section = studio.match(/<section id="beta"[\s\S]*?<\/section>/)?.[0] ?? "";
+  if (!section) fail("/studio/", "Studio Beta Edition section (#beta) is missing");
+  if (/captivate/i.test(section)) fail("/studio/", "Studio Beta Edition section mentions Captivate");
+  if (!section.includes("/studio/beta/#known-issues") || !section.includes("/studio/beta/#tester-guide")) fail("/studio/", "beta section must link to the known issues and the tester guide");
+}
+
+// Product pages: Studio button follows studioDownload.url; Campus demo link and honest status; no "next product" slot.
+{
+  const siteTs = await readFile("src/config/site.ts", "utf8");
+  const studioUrl = siteTs.match(/studioDownload[^=]*=\s*\{\s*url:\s*("([^"]+)"|null)/);
+  const demoUrl = siteTs.match(/demoUrl:\s*"([^"]+)"/)?.[1];
+  const page = await browser.newPage();
+  await page.goto(base + "/studio/");
+  const hero = page.locator('[data-cta="hero-primary"]');
+  const label = (await hero.innerText()).trim();
+  const href = await hero.getAttribute("href");
+  if (!studioUrl) fail("studio", "could not read studioDownload.url from site.ts");
+  else if (studioUrl[1] === "null") {
+    if (label !== "Join the beta" || href !== "/early-access/") fail("/studio/", `with no download URL the button must read "Join the beta" and link to /early-access/ (got "${label}" → ${href})`);
+  } else if (label !== "Download for Windows (beta)" || href !== studioUrl[2]) fail("/studio/", `with a download URL the button must read "Download for Windows (beta)" and link to it (got "${label}" → ${href})`);
+
+  await page.goto(base + "/campus/");
+  const demo = page.locator('[data-cta="campus-demo"]');
+  if ((await demo.innerText()).trim() !== "Try the demo" || (await demo.getAttribute("href")) !== demoUrl) fail("/campus/", "Try the demo must link to campus.demoUrl from site.ts");
+  const text = await page.locator("main").innerText();
+  for (const phrase of ["Early demo", "Billing is simulated", "not yet verified against SCORM Cloud or Moodle"]) {
+    if (!text.includes(phrase)) fail("/campus/", `status banner is missing "${phrase}"`);
+  }
+  if (!(await page.locator("#status").isVisible())) fail("/campus/", "status banner is not visible");
+
+  await page.goto(base + "/");
+  if (/next at nari/i.test(await page.locator("main").innerText())) fail("/", "home must not have a Next at NARI slot");
+  if ((await page.locator('a[href="/studio/"], a[href="/campus/"]').count()) < 2) fail("/", "home must link to both product pages");
+  await page.close();
+}
+
 await browser.close();
-server.close();
+await server.close();
 console.log(`Checked ${routes.length} pages × 2 viewports, ${internalLinks.size} internal links.`);
 if (failures.length) {
   console.log(`\n${failures.length} problem(s):`);

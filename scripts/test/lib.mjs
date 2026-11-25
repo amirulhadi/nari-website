@@ -54,12 +54,16 @@ async function pagesIn(dir, prefix = "") {
     if (entry.isDirectory()) {
       if (["_astro", "demos", "js", "og", "brand"].includes(entry.name) && !prefix) continue;
       out.push(...(await pagesIn(path.join(dir, entry.name), `${prefix}/${entry.name}`)));
-    } else if (entry.name === "index.html") out.push(prefix || "/");
+    } else if (entry.name === "index.html") {
+      // Astro writes meta-refresh stubs for redirected paths. They are not pages.
+      const html = await readFile(path.join(dir, entry.name), "utf8");
+      if (!/<meta http-equiv="refresh"/.test(html)) out.push(prefix || "/");
+    }
   }
   return out;
 }
 
-/** Every built page route ("/", "/features/", …). */
+/** Every built page route ("/", "/studio/features/", …). Redirect stubs are not included. */
 export async function routes() {
   return (await pagesIn(DIST)).map((r) => (r === "/" ? "/" : `${r}/`)).sort();
 }

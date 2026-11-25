@@ -15,7 +15,7 @@ const links = productNav[product];
 const path = Astro.url.pathname.replace(/\/?$/, "/");
 const cta = product === "studio" ? studioCta() : { label: "Try the demo", href: campus.demoUrl, external: true };
 ---
-<div class="sticky top-16 z-40 border-b border-line bg-surface" data-subnav>
+<section aria-label={info.name} class="sticky top-16 z-40 border-b border-line bg-surface" data-subnav>
   <div class="container-site flex min-h-12 flex-wrap items-center gap-x-6 gap-y-1 py-2">
     <a href={info.path} class="shrink-0 rounded-md" aria-label={`${info.name} overview`}>
       <Logo product={product} size="sm" class="!h-6" />
@@ -46,4 +46,4 @@ const cta = product === "studio" ? studioCta() : { label: "Try the demo", href: 
       >{cta.label}</Button>
     </div>
   </div>
-</div>
+</section>
