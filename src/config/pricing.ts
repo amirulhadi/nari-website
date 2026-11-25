@@ -122,7 +122,7 @@ export const comparison: ComparisonGroup[] = [
       { label: "Video (background removal), audio and captions", values: all(true) },
       { label: "Accessibility checks", values: all(true) },
       { label: "Starter courses and slide layouts (current set)", values: all(true) },
-      { label: "PowerPoint and Captivate import with Import report", values: all(true) },
+      { label: "PowerPoint import with Import report", values: all(true) },
     ],
   },
   {

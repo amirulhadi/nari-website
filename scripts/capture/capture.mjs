@@ -83,7 +83,7 @@ console.log(`Capturing from ${APP_URL} → ${OUT}`);
 await page.goto(APP_URL);
 await page.getByRole("button", { name: /new project/i }).waitFor();
 appVersion = ((await page.getByText(/^v\d+\.\d+\.\d+$/).first().textContent()) ?? "").replace(/^v/, "") || appVersion;
-await shot("home", "NARI Studio home screen: new project, open, PowerPoint and Captivate import");
+await shot("home", "NARI Studio home screen: new project, open, PowerPoint import");
 
 // Template picker
 await page.getByRole("button", { name: /new project/i }).click();

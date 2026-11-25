@@ -150,9 +150,9 @@ for (const [href, from] of internalLinks) {
   await page.close();
 }
 
-// Beta Edition pages never mention Captivate (the import is switched off in the beta).
+// No page mentions Captivate (the import is switched off in the beta).
 {
-  for (const route of routes.filter((r) => r.startsWith("/studio/beta/"))) {
+  for (const route of routes) {
     const html = await readFile(path.join(DIST, route, "index.html"), "utf8");
     if (/captivate/i.test(html)) fail(route, "mentions Captivate");
   }

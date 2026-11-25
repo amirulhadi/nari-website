@@ -48,7 +48,7 @@ Everything that may change lives in `src/config/`: `site.ts` (master brand, prod
 npm run capture    # writes src/assets/screenshots/*.png + manifest.json
 npm run brand      # regenerates favicons and the Open Graph image
 npm run demos      # rebuilds the Showcase example courses with the app's own exporter
-npm run test:site      # after a build: crawls every page under the production headers, checks links and anchors, every old URL redirect, no Captivate mention in the beta section
+npm run test:site      # after a build: crawls every page under the production headers, checks links and anchors, every old URL redirect, no Captivate mention anywhere
 npm run test:a11y      # axe-core on every page, light and dark, desktop and phone
 npm run test:keyboard  # keyboard, 320 px reflow, reduced motion, no-JS
 npm run test:seo       # titles, descriptions, canonical, sitemap, structured data

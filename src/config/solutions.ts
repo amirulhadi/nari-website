@@ -139,12 +139,12 @@ export const solutions: Solution[] = [
       heading: "Client-ready courses on your own time and budget",
       body: [
         "Freelancers need to move quickly between clients, formats and LMSs, without carrying a heavy toolchain or depending on a subscription platform's availability.",
-        "Clients often hand over PowerPoint or older Captivate projects as the starting material.",
+        "Clients often hand over PowerPoint decks as the starting material.",
       ],
     },
     helps: [
       { title: "Starter courses", body: "Five starter courses give you a working structure on day one." },
-      { title: "Import what clients send", body: "PowerPoint and Captivate import with a report of what needs attention." },
+      { title: "Import what clients send", body: "PowerPoint import with a report of what needs attention." },
       { title: "Standard deliverables", body: "SCORM 1.2, SCORM 2004 and HTML5 packages that fit most client LMSs." },
       { title: "Works offline", body: "Build on a train or at a client site; your files stay on your computer." },
     ],

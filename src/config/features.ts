@@ -114,7 +114,6 @@ export const featureGroups: FeatureGroup[] = [
     summary: "Bring existing material in as a starting point.",
     features: [
       { title: "PowerPoint import", detail: "Slides with layouts, text, shapes, tables, charts and images (best effort).", status: "available" },
-      { title: "Captivate import", detail: "Slides, text and media from .cpt and .cptx files (best effort).", status: "available" },
       { title: "Import report", detail: "Shows what converted, what needs attention and where, slide by slide.", status: "available" },
     ],
   },

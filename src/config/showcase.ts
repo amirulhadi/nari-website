@@ -79,7 +79,7 @@ export const demos: Demo[] = [
 
 export const notShown = [
   "Video with background removal, audio narration and timed captions: the starter courses use no media, so these demos can't show them yet.",
-  "PowerPoint and Captivate import: the Import report is shown in the app, but is not part of an exported course.",
+  "PowerPoint import: the Import report is shown in the app, but is not part of an exported course.",
   "SCORM reporting: these demos are the HTML5 export. SCORM packages report to your LMS.",
 ];
 
