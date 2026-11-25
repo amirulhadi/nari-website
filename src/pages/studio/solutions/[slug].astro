@@ -15,9 +15,10 @@ const demo = getDemo(solution.demo);
 const others = solutions.filter((s) => s.slug !== solution.slug);
 ---
 <BaseLayout
+  product="studio"
   title={solution.seoTitle}
   description={solution.metaDescription}
-  breadcrumbs={[{ name: "Solutions", path: "/solutions/" }, { name: solution.label, path: `/solutions/${solution.slug}/` }]}
+  breadcrumbs={[{ name: "NARI Studio", path: "/studio/" }, { name: "Solutions", path: "/studio/solutions/" }, { name: solution.label, path: `/studio/solutions/${solution.slug}/` }]}
 >
   <PageHero eyebrow="Solutions" title={solution.title} intro={`For ${solution.audience}.`} />
 
@@ -61,7 +62,7 @@ const others = solutions.filter((s) => s.slug !== solution.slug);
           <p class="text-sm font-semibold text-accent">Related example</p>
           <h3 class="mt-3 text-h3">{demo.title}</h3>
           <p class="mt-2 text-ink-2">{demo.summary}</p>
-          <Button href={`/showcase/${demo.slug}/`} variant="secondary" class="mt-6" cta="solution-demo">Try the example</Button>
+          <Button href={`/studio/showcase/${demo.slug}/`} variant="secondary" class="mt-6" cta="solution-demo">Try the example</Button>
         </div>
       )}
     </div>
@@ -71,7 +72,7 @@ const others = solutions.filter((s) => s.slug !== solution.slug);
     <div class="container-site">
       <h2 id="more-title" class="text-sm font-semibold text-muted">More solutions</h2>
       <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-        {others.map((s) => <li><a href={`/solutions/${s.slug}/`} class="font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">{s.label}</a></li>)}
+        {others.map((s) => <li><a href={`/studio/solutions/${s.slug}/`} class="font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">{s.label}</a></li>)}
       </ul>
     </div>
   </section>

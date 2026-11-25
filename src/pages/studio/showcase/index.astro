@@ -6,6 +6,8 @@ import { demos, notShown } from "@/config/showcase";
 import manifest from "@/assets/screenshots/manifest.json";
 ---
 <BaseLayout
+  product="studio"
+  breadcrumbs={[{ name: "NARI Studio", path: "/studio/" }, { name: "Showcase", path: "/studio/showcase/" }]}
   title="Showcase: example e-learning courses"
   description="Play real example courses made with NARI Studio: a scored quiz with question pools, a branching scenario, an onboarding lesson and a drag-and-drop activity."
 >
@@ -18,7 +20,7 @@ import manifest from "@/assets/screenshots/manifest.json";
   <section class="pb-16 lg:pb-24">
     <div class="container-site grid gap-6 md:grid-cols-2">
       {demos.map((demo) => (
-        <a href={`/showcase/${demo.slug}/`} class="group flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7 transition-colors hover:border-ink/40" data-reveal>
+        <a href={`/studio/showcase/${demo.slug}/`} class="group flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7 transition-colors hover:border-ink/40" data-reveal>
           <p class="text-sm font-semibold text-accent">{demo.kind}</p>
           <h2 class="mt-3 text-h3">{demo.title}</h2>
           <p class="mt-2 text-ink-2">{demo.summary}</p>

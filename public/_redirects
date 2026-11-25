@@ -1,0 +1,10 @@
+# Cloudflare Pages redirects (static; processed before assets). Old Studio paths moved under /studio/.
+# Astro also emits meta-refresh fallback pages for the same paths (see astro.config.mjs).
+/features        /studio/features/        301
+/features/       /studio/features/        301
+/solutions       /studio/solutions/       301
+/solutions/      /studio/solutions/       301
+/solutions/*     /studio/solutions/:splat 301
+/showcase        /studio/showcase/        301
+/showcase/       /studio/showcase/        301
+/showcase/*      /studio/showcase/:splat  301

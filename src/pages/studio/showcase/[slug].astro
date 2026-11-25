@@ -14,13 +14,14 @@ const src = `/demos/${demo.slug}/`;
 const others = demos.filter((d) => d.slug !== demo.slug);
 ---
 <BaseLayout
+  product="studio"
   title={`${demo.title}: example course`}
   description={`${demo.summary} A real course exported from NARI Studio.`}
-  breadcrumbs={[{ name: "Showcase", path: "/showcase/" }, { name: demo.title, path: `/showcase/${demo.slug}/` }]}
+  breadcrumbs={[{ name: "NARI Studio", path: "/studio/" }, { name: "Showcase", path: "/studio/showcase/" }, { name: demo.title, path: `/studio/showcase/${demo.slug}/` }]}
 >
   <section class="pb-10 pt-12 sm:pt-16">
     <div class="container-site">
-      <a href="/showcase/" class="text-sm font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">← All examples</a>
+      <a href="/studio/showcase/" class="text-sm font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">← All examples</a>
       <p class="eyebrow mb-3 mt-6">{demo.kind}</p>
       <h1 class="text-[clamp(2rem,1.5rem+2.4vw,3.25rem)] leading-[1.08] tracking-[-0.03em]">{demo.title}</h1>
       <p class="mt-4 max-w-[44rem] text-lead text-ink-2">{demo.summary}</p>
@@ -68,9 +69,9 @@ const others = demos.filter((d) => d.slug !== demo.slug);
     <div class="container-site">
       <h2 id="other-title" class="text-sm font-semibold text-muted">More examples</h2>
       <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-        {others.map((d) => <li><a href={`/showcase/${d.slug}/`} class="font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">{d.title}</a></li>)}
+        {others.map((d) => <li><a href={`/studio/showcase/${d.slug}/`} class="font-medium text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink">{d.title}</a></li>)}
       </ul>
-      <div class="mt-8"><Button href="/features/" variant="secondary" cta="demo-features">Explore features</Button></div>
+      <div class="mt-8"><Button href="/studio/features/" variant="secondary" cta="demo-features">Explore features</Button></div>
     </div>
   </section>
 

@@ -8,7 +8,7 @@ import ProductFrame from "@/components/ui/ProductFrame.astro";
 import { featureGroups } from "@/config/features";
 import { plans } from "@/config/pricing";
 import PlanCard from "@/components/pricing/PlanCard.astro";
-import { primaryCta, site } from "@/config/site";
+import { studioCta } from "@/config/site";
 
 import editorQuestion from "@/assets/screenshots/editor-question.png";
 import editorBranching from "@/assets/screenshots/editor-branching.png";
@@ -19,7 +19,7 @@ import learnerQuestion from "@/assets/screenshots/learner-question.png";
 import learnerDragdrop from "@/assets/screenshots/learner-dragdrop.png";
 import manifest from "@/assets/screenshots/manifest.json";
 
-const cta = primaryCta();
+const cta = studioCta();
 const appVersion = manifest.appVersion;
 
 const benefits = [
@@ -118,14 +118,17 @@ const totalAvailable = featureGroups.reduce((sum, group) => sum + group.features
 const softwareJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: site.brand,
+  name: "NARI Studio",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Windows",
-  description: site.description,
+  description: "NARI Studio is a desktop authoring tool for building interactive e-learning courses with quizzes, branching and video, then publishing them as SCORM or HTML5 for any learning management system.",
   softwareVersion: appVersion,
 };
 ---
 <BaseLayout
+  title="NARI Studio: desktop e-learning authoring"
+  product="studio"
+  breadcrumbs={[{ name: "NARI Studio", path: "/studio/" }]}
   description="A desktop e-learning authoring tool. Build interactive courses with quizzes, branching and video, then publish SCORM or HTML5 for your LMS."
   structuredData={[softwareJsonLd]}
 >
@@ -135,14 +138,14 @@ const softwareJsonLd = {
       <div class="max-w-[52rem]">
         <p class="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm font-medium text-ink-2">
           <span class="size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-          {site.productStage} · Windows · v{appVersion}
+          Beta · Windows · v{appVersion}
         </p>
         <h1 class="text-display">Build interactive courses. Publish to your LMS.</h1>
         <p class="mt-6 max-w-[40rem] text-lead text-ink-2">
           NARI Studio is a desktop authoring tool for instructional designers and training teams. Design slides, add video, quizzes and branching, then export SCORM or HTML5, all offline, with your files on your own computer.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <Button href={cta.href} size="lg" cta="hero-primary">{cta.label}</Button>
+          <Button href={cta.href} size="lg" cta="hero-primary" {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}>{cta.label}</Button>
           <Button href="#features" variant="secondary" size="lg" cta="hero-secondary">Explore features</Button>
         </div>
         <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted" aria-label="Key facts">
@@ -290,7 +293,7 @@ const softwareJsonLd = {
         <ProductFrame src={learnerDragdrop} alt="Learner view of a drag-and-drop exercise with two drop zones, two items and Submit and Reset buttons" title="Preview — Match the items" caption="Drag-and-drop exercise (Drag and drop practice template)." sizes="(min-width: 1200px) 560px, (min-width: 768px) 50vw, 100vw" />
       </div>
       <p class="mt-8 text-ink-2">
-        Want to try one? <a href="/showcase/" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">Play the example courses</a>, real exports from NARI Studio.
+        Want to try one? <a href="/studio/showcase/" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">Play the example courses</a>, real exports from NARI Studio.
       </p>
     </div>
   </section>
