@@ -24,7 +24,7 @@ const type = [
   <div class="container-site space-y-20 py-16">
     <div class="max-w-[44rem]">
       <p class="eyebrow mb-4">Design system</p>
-      <h1 class="text-h2">NARI Studio styleguide</h1>
+      <h1 class="text-h2">NARI styleguide</h1>
       <p class="mt-5 text-lead text-ink-2">Tokens live in src/styles/global.css. Typeface: Manrope (variable, self-hosted).</p>
     </div>
 
@@ -38,6 +38,21 @@ const type = [
         <Mark size={40} />
         <Mark size={16} tile />
       </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow mb-6">Product lockups</h2>
+      <div class="flex flex-wrap items-center gap-10">
+        <Logo product="studio" size="lg" />
+        <Logo product="studio" />
+        <Logo product="studio" size="sm" />
+      </div>
+      <div class="mt-8 flex flex-wrap items-center gap-10">
+        <Logo product="campus" size="lg" />
+        <Logo product="campus" />
+        <Logo product="campus" size="sm" />
+      </div>
+      <p class="mt-6 max-w-[40rem] text-sm text-muted">One inline copy per lockup follows the theme tokens: ink, muted descriptor, teal node for Studio and amber node (--nari-node-campus) for Campus. Switch the colour scheme to check both.</p>
     </section>
 
     <section>

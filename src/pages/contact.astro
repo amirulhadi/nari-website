@@ -5,21 +5,21 @@ import Button from "@/components/ui/Button.astro";
 import { primaryCta, site } from "@/config/site";
 
 const channels = [
-  { key: "general", title: "General enquiries", body: "Questions about NARI Studio, partnerships or press." },
+  { key: "general", title: "General enquiries", body: "Questions about NARI, NARI Studio or NARI Campus, partnerships or press." },
   { key: "sales", title: "Sales enquiries", body: "Plans, licensing and what suits your work." },
   { key: "enterprise", title: "Enterprise enquiries", body: "Organisation-wide licensing, security questions and procurement." },
-  { key: "support", title: "Support", body: "Help using NARI Studio. In the app, About → Copy diagnostics gathers version and error details (never course content) to include with your message." },
+  { key: "support", title: "Support", body: "Help using NARI Studio or NARI Campus. In NARI Studio, About → Copy diagnostics gathers version and error details (never course content) to include with your message." },
 ] as const;
 
 const cta = primaryCta();
 ---
 <BaseLayout
   title="Contact"
-  description="Contact NARI Studio for general, sales, enterprise and support enquiries."
+  description="Contact NARI for general, sales, enterprise and support enquiries about NARI Studio and NARI Campus."
 >
   <PageHero
     eyebrow="Contact"
-    title="Talk to the NARI Studio team."
+    title="Talk to the NARI team."
     intro="Choose the channel that fits your question."
   />
 
