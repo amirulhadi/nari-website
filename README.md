@@ -57,3 +57,11 @@ Needs Microsoft Edge or Chrome installed (set `CAPTURE_BROWSER=chrome` to switch
 
 ## Rules for content
 Only claim what the app does. Mark anything else "In development" or "Planned" in `features.ts`. No invented prices, testimonials, contact details or customer claims.
+
+## Brand package
+
+Colours and type follow the shared NARI brand package (`@nari/brand`, pinned in `brand.lock.json`; currently v0.1.0). `The site keeps its token block in `src/styles/global.css``.
+
+`npm run brand:check` fails if this repo's tokens drift from the pinned version (`scripts/brand-check.mjs`, rules in `brand.rules.json`). CI runs it before the build.
+
+To upgrade: in the brand repo bump the version, run `npm run build` and `npm run brand:lock -- "<path to this repo>"` (rewrites `brand.lock.json` and `scripts/brand-check.mjs`), update this repo's tokens and assets from the new release, then run `npm run brand:check`.
