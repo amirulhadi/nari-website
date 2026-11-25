@@ -1,5 +1,7 @@
 # NARI Studio — Logo & Wordmark Directions (for selection)
 
+> **Superseded.** These sketches were replaced by the approved Direction A ("Path") in the NARI brand package (`NARI Brand Master Standardization/brand`, v0.1.0: logos, icons, tokens and guidelines). Kept for history only.
+
 Visual board: open [logo-directions.html](logo-directions.html) in a browser (it loads Manrope, Inter and Geist from Google Fonts for the comparison only; the site will self-host its font).
 
 These are early sketches for choosing a direction. The chosen one is refined in Phase 2 (optical balance, 16/32 px versions, app-icon variant, clear-space and colour rules, SVG source).
